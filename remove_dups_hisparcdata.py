@@ -23,7 +23,7 @@ def remove_dups(data, group):
     clist.sort()
     print "Removing %d duplicate rows of shower data" % (len(events) - len(clist))
 
-    
+
     if len(clist) != len(events):
         tmptable = data.createTable(group, 't__events',
                                     description=events.description)

@@ -7,7 +7,7 @@ def drop(L, N):
     return [x for i,x in enumerate(L) if i % N == 0]
 
 def downsample(x,y):
-    
+
     x = array(drop (x,ceil(len(x) / 500000.0)))
     y = array(drop (y,ceil(len(y) / 500000.0)))
 
@@ -27,6 +27,6 @@ print 'len y is %g' % (len(y))
 a = 5
 b = 4
 
-plt.plot(x, y, 'o', label='Original data', markersize=1)    
+plt.plot(x, y, 'o', label='Original data', markersize=1)
 plt.plot(x, a*x + b, 'r', label='Fitted line')
 """

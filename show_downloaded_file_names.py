@@ -1,10 +1,10 @@
-    
+
 def show_downloaded_file_names(kind_of_data_in_table):
     print ' _____________________________________________________________'
     print '|                                                             |'
     print '| You have downloaded the file(s):       containing data of:  |'
     print '|                                                             |'
-    print '|                                        SHOWER WEATHER       |'  
+    print '|                                        SHOWER WEATHER       |'
     print '|                                                             |'
     for i in kind_of_data_in_table:
         length_string = len(i[0])+ len(str(i[1])) + len(str(i[2]))
@@ -35,6 +35,6 @@ def show_downloaded_file_names(kind_of_data_in_table):
         elif length_string == 49:
             print '| '+ str(i) + '   |'
         else:
-            print i[0], length_string    
-    
+            print i[0], length_string
+
     print '|_____________________________________________________________|'

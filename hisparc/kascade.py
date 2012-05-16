@@ -126,7 +126,7 @@ def helper(hisparc, kascade, kascadefile):
     except IndexError:
         print "There is no HiSPARC data yet."
         return
-    
+
     # Determine start and stop timestamps from KASCADE data
     try:
         ts = kascade[:]['timestamp']

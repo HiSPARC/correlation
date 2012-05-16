@@ -3,32 +3,32 @@ import tables
 from get_station_ID_from_filename import get_station_ID_from_filename
 
 def kind_of_data(list_file_names):
-    
+
     muon_data_present_in_table = []
     weather_data_present_in_table = []
-    
+
     for i in list_file_names:
         user_hisparc_station_id = get_station_ID_from_filename(i)
         data = tables.openFile(i, 'r')
         table =  'data.root.'
         folder = 's' + user_hisparc_station_id
         group = table + folder
-                   
+
         if 'events' in eval(group):
             muon_data_present_in_table.append(True)
         else:
             muon_data_present_in_table.append(False)
-    
+
         if 'weather' in eval(group):
             weather_data_present_in_table.append(True)
         else:
             weather_data_present_in_table.append(False)
-        
-        
+
+
         data.close()
-        
+
     kind_of_data_in_table = zip(list_file_names, muon_data_present_in_table,weather_data_present_in_table)
-    
+
     return kind_of_data_in_table
 
 """

@@ -18,29 +18,13 @@ def get_last_day(dt):
     return get_first_day(dt, 0, 1) + timedelta(-1)
 
 def start_end_day_of_the_month(year, month):
-    
+
     h = str(get_first_day(date(year,month,1)))
     list = re.split('-',h)
     list_int = [int(x) for x in list]
-    
+
     i = str(get_last_day(date(year,month,1)))
     list2 = re.split('-',i)
     list_int2 = [int(x) for x in list2]
-    
+
     return [list_int[2], list_int2[2]]
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-

@@ -26,7 +26,7 @@ def get_traces(traces_array, indexes):
         >>> traces = get_traces(data.root.hisparc.station505.traces,
         ... traces_i)
 
-    Now you can plot the traces, for example. 
+    Now you can plot the traces, for example.
 
     """
     traces = []
