@@ -31,8 +31,6 @@ def choose_one_variable(kind_of_data_in_table, stations):
             stationIDs1.append(station_ID)
             filenames1.append(i[0])
             kinds1.append(kind)
-
-
         else:
             pass
 
