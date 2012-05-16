@@ -20,16 +20,16 @@ from get_corresponding_values_selection import get_corresponding_values_selectio
 from create_correlation_table import create_correlation_table
 from interpolate_selection import interpolate_selection
 
-print '                                                                                '
-print 'MM     $MM  MMM     MMMM     MMMMMMM         MMM      MMMMMMM         MMMM     '
-print 'MM     $MM  MMM   MMMMMMMM   MMMMMMMMM8     MMMM      MMMMMMMMMM   ZMMMMMMMM    '
-print 'MM     $MM       MMM    MMM  MMM    =MM     MMMMM     MM      MM  =MM     MMM   '
-print 'MM     $MM  MMM   MMMMN      MMM    MMM    MMN MMN    MM     MMM  MMM           '
-print 'MMMMMMMMMM  MMM     MMMMMM   MMMMMMMMM    MMM   MM    MMMMMMMM    MM8           '
-print 'MM     $MM  MMM         MMM  MMM          MMMMMMMMM   MM   MMM~   MMM      M    '
-print 'MM     $MM  MMM  MMM    MMM  MMM         MMM     MM   MM    =MM+   MMM   +MMM   '
-print 'MM     $MM  MMM   MMMMMMMM   MMM        8MM      MMM  MM      MMO   MMMMMMM=    '
-print '                                                                                '
+print ''
+print 'MM     $MM  MMM     MMMM     MMMMMMM         MMM      MMMMMMM         MMMM'
+print 'MM     $MM  MMM   MMMMMMMM   MMMMMMMMM8     MMMM      MMMMMMMMMM   ZMMMMMMMM'
+print 'MM     $MM       MMM    MMM  MMM    =MM     MMMMM     MM      MM  =MM     MMM'
+print 'MM     $MM  MMM   MMMMN      MMM    MMM    MMN MMN    MM     MMM  MMM'
+print 'MMMMMMMMMM  MMM     MMMMMM   MMMMMMMMM    MMM   MM    MMMMMMMM    MM8'
+print 'MM     $MM  MMM         MMM  MMM          MMMMMMMMM   MM   MMM~   MMM      M'
+print 'MM     $MM  MMM  MMM    MMM  MMM         MMM     MM   MM    =MM+   MMM   +MMM'
+print 'MM     $MM  MMM   MMMMMMMM   MMM        8MM      MMM  MM      MMO   MMMMMMM='
+print ''
 
 print ''
 print 'Welcome to HiSPARC download and correlation software!'
