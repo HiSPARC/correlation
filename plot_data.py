@@ -181,12 +181,11 @@ def plot_data(plot_variable):
                 returntype = 'whole'
 
             elif whole == False:
-                dummy = True
 
                 x_lim_low = 2
                 x_lim_up = 2
 
-                while dummy:
+                while True:
 
                     start = datetime.fromtimestamp(dat_sorted1[0][0])
                     print ''
@@ -198,12 +197,11 @@ def plot_data(plot_variable):
                     print ''
                     print 'You are going to enter the UPPER time value.'
                     print ''
-                    dummy3 = True
-                    while dummy3:
+                    while True:
                         x_lim_up = question_is_digit('Enter the number of seconds after the timestamp shown above ( e.g. input "86400" means x_end = timestamp + 86400 s ): ')
                         x_lim_up = int(x_lim_up)
                         if x_lim_up > x_lim_low and dat_sorted1[0][0] + x_lim_up <= dat_sorted1[-1][0]:
-                            dummy2 = False
+                            break
                         elif x_lim_up < x_lim_low:
                             print "Oops! Your lower time limit is larger than your upper time limit. Try again."
                         elif x_lim_up == x_lim_low:
@@ -259,10 +257,8 @@ def plot_data(plot_variable):
                     plt.show()
 
                     again = query_yes_no('Do you want to plot again with different values for the UPPER and LOWER time?') # ask for user input
-                    if again == True:
-                        pass
-                    else:
-                        dummy = False
+                    if again != True:
+                        break
 
     else:
         timing = 0
@@ -305,13 +301,12 @@ def plot_data(plot_variable):
             returntype = 'whole'
 
         elif whole == False:
-            dummy = True
 
             x_lim_low = 2
             x_lim_up = 2
             plot_list = []
 
-            while dummy:
+            while True:
                 start = datetime.fromtimestamp(dat_sorted[0][0])
                 print ''
                 print 'Start time = ' + str(start)
@@ -322,12 +317,11 @@ def plot_data(plot_variable):
                 print ''
                 print 'You are going to enter the UPPER time value.'
                 print ''
-                dummy2 = True
-                while dummy2:
+                while True:
                     x_lim_up = question_is_digit('Enter the number of seconds after the timestamp shown above ( e.g. input "86400" means x_end = timestamp + 86400 s ): ')
                     x_lim_up = int(x_lim_up)
                     if x_lim_up > x_lim_low and dat_sorted[0][0] + x_lim_up <= dat_sorted[-1][0]:
-                        dummy2 = False
+                        break
                     elif x_lim_up < x_lim_low:
                         print "Oops! Your lower time limit is larger than your upper time limit. Try again."
                     elif x_lim_up == x_lim_low:
@@ -357,10 +351,9 @@ def plot_data(plot_variable):
                 plt.show()
 
                 again = query_yes_no('Do you want to plot again with different values for the UPPER and LOWER time?') # ask for user input
-                if again == True:
-                    pass
-                else:
-                    dummy = False
+                if again != True:
+                    break
+
     return values, timing, returntype
 
 """
