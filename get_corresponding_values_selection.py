@@ -67,7 +67,7 @@ def get_corresponding_values_selection(plot_variable2,times):
 
         if bad_data2:
             print 'Removed %d rows of bad %s data.' % (len(data_sorted) - len(var_list_without_bad_data2), plot_variable2[0][0])
-            print_bad_data2 = query_yes_no('Do you want to print the BAD data?')# ask for user input
+            print_bad_data2 = query_yes_no('Do you want to print the BAD data?')
             if print_bad_data2:
                 print bad_data2
 

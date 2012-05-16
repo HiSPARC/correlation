@@ -31,7 +31,7 @@ def plot_data(plot_variable):
 
     if plot_variable[0][0] == 'pulseheights' or plot_variable[0][0] == 'integrals':
         print ''
-        MPV = query_yes_no('Do you want to PLOT the MPV value of the ' + plot_variable[0][0] + '? ')# ask for user input
+        MPV = query_yes_no('Do you want to PLOT the MPV value of the ' + plot_variable[0][0] + '? ')
         if MPV == True:
 
             print ''
@@ -154,7 +154,7 @@ def plot_data(plot_variable):
             print ''
             print 'Your file(s) contain(s) data from ' + str(datetime.fromtimestamp(dat_sorted1[0][0])) + ' until ' + str(datetime.fromtimestamp(dat_sorted1[-1][0]))
             print ''
-            whole = query_yes_no('Do you want to PLOT this whole time interval')# ask for user input
+            whole = query_yes_no('Do you want to PLOT this whole time interval')
 
             if whole == True:
                 x = dat_sorted1[:,0]
@@ -256,7 +256,7 @@ def plot_data(plot_variable):
                         plt.plot(x,plot_list4[:,1])
                     plt.show()
 
-                    again = query_yes_no('Do you want to plot again with different values for the UPPER and LOWER time?') # ask for user input
+                    again = query_yes_no('Do you want to plot again with different values for the UPPER and LOWER time?')
                     if again != True:
                         break
 
@@ -285,7 +285,7 @@ def plot_data(plot_variable):
         print ''
         print 'Your file(s) contain(s) data from ' + str(datetime.fromtimestamp(dat_sorted[0][0])) + ' until ' + str(datetime.fromtimestamp(dat_sorted[-1][0]))
         print ''
-        whole = query_yes_no('Do you want to PLOT this whole time interval')# ask for user input
+        whole = query_yes_no('Do you want to PLOT this whole time interval')
 
         if whole == True:
             dat_sorted = array(dat_sorted)
@@ -350,7 +350,7 @@ def plot_data(plot_variable):
                 plt.grid(True)
                 plt.show()
 
-                again = query_yes_no('Do you want to plot again with different values for the UPPER and LOWER time?') # ask for user input
+                again = query_yes_no('Do you want to plot again with different values for the UPPER and LOWER time?')
                 if again != True:
                     break
 

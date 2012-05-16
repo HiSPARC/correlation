@@ -57,7 +57,7 @@ def least_squares_fit(filename, variable1,variable2):
     variable_2 = data.root.correlation.table[:]['variable2']
     data.close()
 
-    y_axis = query_yes_no("Do you want to plot '" + variable1[0][0] + "' on the y-axis?")# ask for user input
+    y_axis = query_yes_no("Do you want to plot '" + variable1[0][0] + "' on the y-axis?")
 
     if len(variable_1.shape) != 1:
         print 'There are %d plates with an individual %s value.' % (variable_1.shape[1], variable1[0][0])
