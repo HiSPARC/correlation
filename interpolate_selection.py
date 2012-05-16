@@ -81,8 +81,6 @@ def interpolate_selection(var1,var2):
             del variable1, variable2
             table_variable1.flush()
 
-        else:
-            pass
 
     else:
         print ''

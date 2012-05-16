@@ -63,15 +63,11 @@ def least_squares_fit(filename, variable1,variable2):
         print 'There are %d plates with an individual %s value.' % (variable_1.shape[1], variable1[0][0])
         plate_number1 = int(question_is_digit_plate("Enter the plate number that you want to you use in your correlation analysis ( e.g. '1' ): ", variable_1.shape[1]))
         variable_1 = variable_1[:,plate_number1-1]
-    else:
-        pass
 
     if len(variable_2.shape) != 1:
         print 'There are %d plates with an individual %s value.' % (variable_2.shape[1], variable2[0][0])
         plate_number2 = int(question_is_digit_plate("Enter the plate number that you want to you use in your correlation analysis ( e.g. '1' ): ", variable_2.shape[1]))
         variable_2 = variable_2[:,plate_number2-1]
-    else:
-        pass
 
     if y_axis == True:
         y = variable_1 # e.g. 'event_rates'
@@ -125,8 +121,6 @@ def least_squares_fit(filename, variable1,variable2):
         correlation = 'a MEDIUM '
     elif absolute_cor_coef >= 0.5 and absolute_cor_coef <= 1:
         correlation = 'a STRONG '
-    else:
-        pass
 
     if cor_coef > 0: #and correlation != 'NO ':
         pos_neg = 'POSITIVE'
@@ -134,8 +128,6 @@ def least_squares_fit(filename, variable1,variable2):
         pos_neg = 'NEGATIVE'
     elif cor_coef == 0:
         pos_neg = ''
-    else:
-        pass
 
     conclusion = "For this sample you have found " + correlation + pos_neg + " correlation between '" + variable1[0][0] + "' and '" + variable2[0][0] + " ."
     print conclusion
@@ -182,8 +174,6 @@ def least_squares_fit(filename, variable1,variable2):
 
     if(len(x) > 500000):
         x,y = downsample(x,y)
-    else:
-        pass
 
     plt.plot(x, y, 'o', label='Original data', markersize=1)
     plt.plot(x, a*x + b, 'r', label='Fitted line')

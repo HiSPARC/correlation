@@ -91,8 +91,6 @@ def find_MPV_integrals(pulseheights_list,plot_variable):
                     lowest_bin = h
                     lowest_p = value[h]
                     break
-                else:
-                    pass
 
             binsize = binsize[lowest_bin:]
             value = value[lowest_bin:]
@@ -143,8 +141,6 @@ def find_MPV_integrals(pulseheights_list,plot_variable):
                         success = True
                         #print success
                         list.append([deviation,a,b,c,k])
-                    else:
-                        pass
 
                 except RuntimeError:
                     print 'Error'
@@ -176,8 +172,6 @@ def find_MPV_integrals(pulseheights_list,plot_variable):
                     print 'Close plot to continue...'
                     print ''
                     plt.show()
-                else:
-                    pass
 
                 print 'MPV value = %.2f %s ' % (list[0][2],units[plot_variable[0][0]])
                 print ''
@@ -201,8 +195,6 @@ def find_MPV_integrals(pulseheights_list,plot_variable):
                     print ''
                     print 'Close plot to continue...'
                     plt.show()
-                else:
-                    pass
 
 
             #print MPV_MIPs

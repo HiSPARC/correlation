@@ -79,23 +79,15 @@ def interpolate(var1,var2):
             for t1,v1 in variable1_sorted:
                 if v1 >= low_limit[var1[i][0]] and  v1 <= high_limit[var1[i][0]]:
                     var_list_without_bad_data.append((t1,v1))
-                else:
-                    pass
 
             if len(variable1_sorted) != len(var_list_without_bad_data):
                 print 'Removed %d rows of bad %s data.' % (len(variable1_sorted) - len(var_list_without_bad_data), var1[i][0])
                 if len(var_list_without_bad_data) == 0:
                     print 'Exit. In your data file there is no valid %s data' % (var1[i][0])
                     exit()
-                else:
-                    pass
-            else:
-                pass
 
             variable1_sorted = var_list_without_bad_data
             del var_list_without_bad_data
-        else:
-            pass
 
         length_var1 = len(variable1_sorted)
 
@@ -128,22 +120,14 @@ def interpolate(var1,var2):
             for t2,v2 in variable2_sorted:
                 if v2 >= low_limit[var2[i][0]] and  v2 <= high_limit[var2[i][0]]:
                     var_list_without_bad_data2.append((t2,v2))
-                else:
-                    pass
 
             if len(variable2_sorted) != len(var_list_without_bad_data2):
                 print 'Removed %d rows of bad %s data.' % (len(variable2_sorted) - len(var_list_without_bad_data2), var2[i][0])
                 if len(var_list_without_bad_data2) == 0:
                     print 'Exit. In your data file there is no valid %s data' % (var2[i][0])
                     exit()
-                else:
-                    pass
-            else:
-                pass
             variable2_sorted = var_list_without_bad_data2
             del var_list_without_bad_data2
-        else:
-            pass
 
         length_var2 = len(variable2_sorted)
 
@@ -183,8 +167,6 @@ def interpolate(var1,var2):
                 del variable1, variable2
                 table_variable1.flush()
 
-            else:
-                pass
 
         else:
             print ''

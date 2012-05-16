@@ -38,12 +38,6 @@ def get_corresponding_values_selection(plot_variable2,times):
             print_bad_data2 = query_yes_no('Do you want to print the BAD data?')# ask for user input
             if print_bad_data2:
                 print bad_data2
-            else:
-                pass
-        else:
-            pass
-    else:
-        pass
 
     # for the specified timeinterval the variable2 values are brought together
 

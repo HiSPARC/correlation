@@ -174,8 +174,6 @@ def plot_data(plot_variable):
                     y = dat_sorted4[:,1]
                     plt.plot(x,y)
                     values = array(zip(dat_sorted1[:,1],dat_sorted2[:,1],dat_sorted3[:,1],dat_sorted4[:,1]))
-                else:
-                    pass
 
                 plt.grid(True)
                 plt.show()
@@ -245,8 +243,6 @@ def plot_data(plot_variable):
                         plot_list4 = array(plot_list4)
 
                         values = array(zip(plot_list1[:,1],plot_list2[:,1],plot_list3[:,1],plot_list4[:,1]))
-                    else:
-                        pass
 
                     times = plot_list1[:,0]
                     x = [datetime.fromtimestamp(i) for i in times]
@@ -260,8 +256,6 @@ def plot_data(plot_variable):
                     if number_of_plates == 4:
                         plt.plot(x,plot_list3[:,1])
                         plt.plot(x,plot_list4[:,1])
-                    else:
-                        pass
                     plt.show()
 
                     again = query_yes_no('Do you want to plot again with different values for the UPPER and LOWER time?') # ask for user input
@@ -270,8 +264,6 @@ def plot_data(plot_variable):
                     else:
                         dummy = False
 
-            else:
-                pass
     else:
         timing = 0
         pass
@@ -369,8 +361,6 @@ def plot_data(plot_variable):
                     pass
                 else:
                     dummy = False
-        else:
-            pass
     return values, timing, returntype
 
 """

@@ -116,8 +116,6 @@ def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates)
                             if h > photon_bin and binsize[h+1] > binsize[h]:    # the bin that is more to the right than the photon bin and if the histogram is rising again.
                                 lowest_bin = h
                                 break   # if the lowest bin is found stop searching
-                            else:
-                                pass
                         except IndexError:
                             skip = True
 
@@ -191,8 +189,6 @@ def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates)
                                     success = True
                                     #print success
                                     fit_values_list.append([deviation,a,b,c,k])
-                                else:
-                                    pass
 
                             except RuntimeError:
                                 print 'Error'
@@ -224,8 +220,6 @@ def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates)
                                 print 'Close plot to continue...'
                                 print ''
                                 plt.show()
-                            else:
-                                pass
                             print 'MPV value = %.2f %s ' % (fit_values_list[0][2],units[plot_variable[0][0]])
                             print ''
                             success = False
@@ -248,8 +242,6 @@ def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates)
                                 print ''
                                 print 'Close plot to continue...'
                                 plt.show()
-                            else:
-                                pass
 
 
                     elif skip == True:

@@ -19,8 +19,6 @@ def create_correlation_table(plot_variable1,plot_variable2, values1, values2,sec
                 number_of_plates1 = get_number_of_plates(values1[0])
             if plot_variable2[0][0] == 'pulseheights' or plot_variable2[0][0] == 'integrals':
                 number_of_plates2 = get_number_of_plates(values2[0])
-        else:
-            pass
 
         # declare a class
         class Variable1(IsDescription):

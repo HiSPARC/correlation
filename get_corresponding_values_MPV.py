@@ -38,12 +38,6 @@ def get_corresponding_values_MPV(plot_variable2,times):
             print_bad_data2 = query_yes_no('Do you want to print the BAD data?')# ask for user input
             if print_bad_data2:
                 print bad_data2
-            else:
-                pass
-        else:
-            pass
-    else:
-        pass
 
     if len(times) <= 1: # a correlation analysis for one datapoint is pointless
         print 'not enough data'
@@ -80,8 +74,6 @@ def get_corresponding_values_MPV(plot_variable2,times):
                 print 'No data for this time interval: list is empty.'
         elif len(j.shape) == 1:
             print 'No data for this time interval: list is empty.'
-        else:
-            pass
             print 'weird'
     mean_variable_list = array(mean_variable_list)
 

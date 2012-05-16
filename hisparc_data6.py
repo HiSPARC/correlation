@@ -47,8 +47,6 @@ if download_question == True:
     show_operational_stations = query_yes_no('Do you want to see a list with operational HiSPARC and WEATHER stations?')
     if show_operational_stations == True:
         search_operational_stations()
-    else:
-        pass
 
     user_hisparc_station_id_1 = question_is_digit('Enter the HiSPARC STATION ID from which you want to download data ( e.g. 501 ): ')
     stations.append(user_hisparc_station_id_1)
@@ -96,12 +94,6 @@ if download_question == True:
             kind_of_data_in_station_2 = kind_of_data(list_file_names_station_2)
             kind_of_data_in_table.extend(kind_of_data_in_station_2)
             show_downloaded_file_names(kind_of_data_in_table)
-        else:
-            pass
-    else:
-        pass
-else:
-    pass
 
 print ''
 
@@ -116,8 +108,6 @@ if plot_question == True and download_question == False:
 elif plot_question == True and download_question == True:
     use_downloaded_files = query_yes_no('Do you want to use the data you downloaded earlier?')
 
-else:
-    pass
 
 if plot_question == True and use_downloaded_files == True:
     plot_variable1 = choose_one_variable(kind_of_data_in_table, stations) #e.g. plot_variable = [('event_rate','data_s501_2011,12,7 - 2011,12,8.h5','501','events','')]
@@ -151,8 +141,6 @@ if plot_question == True and use_downloaded_files == False:
     kind_of_data_in_table = kind_of_data(list_files) # e.g.  [('data_s501_2011,6,30 - 2011,6,30.h5', True, True), ('data_s502_2011,6,30 - 2011,6,30.h5', True, False)]
     plot_variable1 = choose_one_variable(kind_of_data_in_table, stations) #e.g. plot_variable = [('event_rate','data_s501_2011,12,7 - 2011,12,8.h5','501','events','')]
     values1, times, returntype = plot_data(plot_variable1)
-else:
-    pass
 
 
 print ''
@@ -215,10 +203,6 @@ if plot_question == True and correlate_question == True:
 
         else:
             print 'problem'
-    else:
-        pass
-else:
-    pass
 
 print ''
 if correlate_question == True and download_question == False and use_plotted_files == False:
@@ -230,8 +214,6 @@ if correlate_question == True and download_question == False and use_plotted_fil
 elif correlate_question == True and download_question == True and use_plotted_files == False:
     use_downloaded_files = query_yes_no('Do you want to use the data you downloaded earlier?')
 
-else:
-    pass
 
 if correlate_question == True and use_downloaded_files == True and use_plotted_files == False:
     #e.g. variable1 = [('event_rate','data_s501_2011,12,7 - 2011,12,8.h5','501','events')]
@@ -271,5 +253,3 @@ if correlate_question == True and use_downloaded_files == False and use_plotted_
     filen = interpolate(variable1,variable2) # e.g. cor_data_barometer_501_event_rate_502.h5
     least_squares_fit(filen, variable1, variable2)
 
-else:
-    pass

@@ -36,8 +36,6 @@ def select_variable(kind_of_data_in_table,stations):
                     print ''
                     for k in shower_var:
                         print '-' + k
-                else:
-                    pass
 
                 if j[2] == True:
                     weather_var = eval('data.root.s' + stationID + '.weather.colnames')
@@ -53,8 +51,6 @@ def select_variable(kind_of_data_in_table,stations):
 
                     for l in weather_var:
                         print '-' + l
-                else:
-                    pass
                 data.close()
 
                 if j[1] == True | j[2] == True:
@@ -63,8 +59,6 @@ def select_variable(kind_of_data_in_table,stations):
                     var = question_is_variable('Enter the variable from station ' + stationID + " that you want to use in your analysis ( e.g. 'event_rate' ) : ", variables)
                     variable.append(var)
                     returnvar = variable[0]
-            else:
-                pass
         else:
             break
     return returnvar

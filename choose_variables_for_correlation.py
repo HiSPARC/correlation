@@ -49,8 +49,6 @@ def choose_variables_for_correlation(kind_of_data_in_table, stations):
                 kinds2.append(kind)
 
             variable2_specs = zip(variables2,filenames2, stationIDs2,kinds2)
-        else:
-            pass
 
     if len(stations) == 2:
         if not variable1:
@@ -66,8 +64,6 @@ def choose_variables_for_correlation(kind_of_data_in_table, stations):
                     kinds1.append(kind)
 
                     variable1_specs = zip(variables1,filenames1, stationIDs1,kinds1)
-                else:
-                    pass
         if variable1:
             #'select var2 from station 2'
             variable2 = select_variable(kind_of_data_in_table,stations[1])
@@ -80,12 +76,6 @@ def choose_variables_for_correlation(kind_of_data_in_table, stations):
                     kinds2.append(kind)
 
                     variable2_specs = zip(variables2,filenames2, stationIDs2,kinds2)
-                else:
-                    pass
-        else:
-            pass
-    else:
-        pass
 
     return variable1_specs, variable2_specs
 

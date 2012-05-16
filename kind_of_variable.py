@@ -17,8 +17,6 @@ def kind_of_variable(file, station, variable):
 
         if file[2] == True:
             weather_var = eval('data.root.s' + stationID + '.weather.colnames')
-        else:
-            pass
 
         if file[1] == True | file[2] == True:
             if variable in weather_var:
@@ -26,8 +24,6 @@ def kind_of_variable(file, station, variable):
             elif variable in shower_var:
                 kind = 'events'
 
-            else:
-                pass
         return kind
     else:
         'problem'

@@ -66,8 +66,6 @@ def down_data_in_parts(user_hisparc_station_id, user_start_date_data_interval, u
             weather_data_in_file = check_if_weather(data,filename)
             if weather_data_in_file:
                 remove_dups_weatherdata(data,eval(path))
-            else:
-                pass
 
 
 
@@ -114,8 +112,6 @@ def down_data_in_parts(user_hisparc_station_id, user_start_date_data_interval, u
                             weather_data_in_file = check_if_weather(data,filename)
                             if weather_data_in_file:
                                 remove_dups_weatherdata(data,eval(path))
-                            else:
-                                pass
 
 
                             list_with_downloaded_data_files.append(filename) # append to filenames list
@@ -151,8 +147,6 @@ def down_data_in_parts(user_hisparc_station_id, user_start_date_data_interval, u
                             weather_data_in_file = check_if_weather(data,filename)
                             if weather_data_in_file:
                                 remove_dups_weatherdata(data,eval(path))
-                            else:
-                                pass
 
 
 
@@ -164,8 +158,6 @@ def down_data_in_parts(user_hisparc_station_id, user_start_date_data_interval, u
                             print ''
                             data.close()
 
-                        else:
-                            pass
 
                         if start_list_int[1] != 12: # download the rest of the months of the first year of the chosen date interval # condition is necessary because if the december is the only month of the first year we are alredy done
                             months = range(start_list_int[1]+1, 13)  # [...12]
@@ -188,8 +180,6 @@ def down_data_in_parts(user_hisparc_station_id, user_start_date_data_interval, u
                                     weather_data_in_file = check_if_weather(data,filename)
                                     if weather_data_in_file:
                                         remove_dups_weatherdata(data,eval(path))
-                                    else:
-                                        pass
 
 
                                     list_with_downloaded_data_files.append(filename) # append to filenames list
@@ -219,8 +209,6 @@ def down_data_in_parts(user_hisparc_station_id, user_start_date_data_interval, u
                                     weather_data_in_file = check_if_weather(data,filename)
                                     if weather_data_in_file:
                                         remove_dups_weatherdata(data,eval(path))
-                                    else:
-                                        pass
 
 
 
@@ -232,10 +220,6 @@ def down_data_in_parts(user_hisparc_station_id, user_start_date_data_interval, u
                                     print 'You can find it at the location: ' + os.getcwd()
                                     print ''
                                     data.close()
-                                else:
-                                    pass
-                        else:
-                            pass
 
                     if i != years[-1] and i != years[0]: # If we are not in the last year and not in the first year of the chosen date interval
                         months = range(1, 13)  # [1, 2, ... 12]
@@ -257,8 +241,6 @@ def down_data_in_parts(user_hisparc_station_id, user_start_date_data_interval, u
                                 weather_data_in_file = check_if_weather(data,filename)
                                 if weather_data_in_file:
                                     remove_dups_weatherdata(data,eval(path))
-                                else:
-                                    pass
 
 
 
@@ -287,8 +269,6 @@ def down_data_in_parts(user_hisparc_station_id, user_start_date_data_interval, u
                                 weather_data_in_file = check_if_weather(data,filename)
                                 if weather_data_in_file:
                                     remove_dups_weatherdata(data,eval(path))
-                                else:
-                                    pass
 
 
 
@@ -322,8 +302,6 @@ def down_data_in_parts(user_hisparc_station_id, user_start_date_data_interval, u
                                 weather_data_in_file = check_if_weather(data,filename)
                                 if weather_data_in_file:
                                     remove_dups_weatherdata(data,eval(path))
-                                else:
-                                    pass
 
 
                                 list_with_downloaded_data_files.append(filename) # append to filenames list
@@ -353,8 +331,6 @@ def down_data_in_parts(user_hisparc_station_id, user_start_date_data_interval, u
                                 weather_data_in_file = check_if_weather(data,filename)
                                 if weather_data_in_file:
                                     remove_dups_weatherdata(data,eval(path))
-                                else:
-                                    pass
 
 
 
@@ -367,8 +343,6 @@ def down_data_in_parts(user_hisparc_station_id, user_start_date_data_interval, u
                                 print ''
                                 data.close()
 
-                            else:
-                                pass
             else: # i.e. the time interval is shorter than one year or equal to one year
                 if stop_list_int[2] == 1:
                     nmonths = diff_month(start_date, end_date)
@@ -395,8 +369,6 @@ def down_data_in_parts(user_hisparc_station_id, user_start_date_data_interval, u
                         weather_data_in_file = check_if_weather(data,filename)
                         if weather_data_in_file:
                             remove_dups_weatherdata(data,eval(path))
-                        else:
-                            pass
 
 
 
@@ -426,8 +398,6 @@ def down_data_in_parts(user_hisparc_station_id, user_start_date_data_interval, u
                         weather_data_in_file = check_if_weather(data,filename)
                         if weather_data_in_file:
                             remove_dups_weatherdata(data,eval(path))
-                        else:
-                            pass
 
 
 
@@ -473,8 +443,6 @@ def down_data_in_parts(user_hisparc_station_id, user_start_date_data_interval, u
                         weather_data_in_file = check_if_weather(data,filename)
                         if weather_data_in_file:
                             remove_dups_weatherdata(data,eval(path))
-                        else:
-                            pass
 
 
 
@@ -486,8 +454,6 @@ def down_data_in_parts(user_hisparc_station_id, user_start_date_data_interval, u
                         print ''
                         data.close()
 
-                    else:
-                        pass
     else:
         print
         print 'Error time input'

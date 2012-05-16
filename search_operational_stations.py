@@ -96,13 +96,9 @@ def search_operational_stations():
 
                 if 'events' in eval(group):
                     operational_hisparc_station_IDs.append(i)
-                else:
-                    pass
 
                 if 'weather' in eval(group):
                     operational_weather_station_IDs.append(i)
-                else:
-                    pass
 
                 data.close()
             os.remove(filename)
@@ -140,8 +136,6 @@ def search_operational_stations():
 
         read_list_from_file()
 
-    else:
-        pass
 
 
 
