@@ -258,13 +258,12 @@ if correlate_question == True and use_downloaded_files == False and use_plotted_
         print 'Enter the filenames in CHRONOLOGICAL ORDER. '
         print ''
         for j in range(1, int(number_of_files)+1):
-            dummy = True
-            while dummy:
+            while True:
                 filename = raw_input('For station ' + str(i) + ' enter filename number ' + str(j) + ': ')
                 ID = get_station_ID_from_filename(filename)
                 if ID in stations:
-                    dummy=False
                     list_files.append(filename) # pas 'kind of data' aan zodat kijkt of hetzelfde station
+                    break
                 else:
                     print "Oops! The filename you entered does not match the station ID you entered earlier. Try again..."
 
