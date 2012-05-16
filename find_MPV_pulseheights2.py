@@ -12,7 +12,33 @@ def func(x, a, b, c):
 
 def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates):
 
-    units = dict(event_id = None , timestamp = 'seconds', temp_inside = 'degrees Celcius', temp_outside = 'degrees Celcius', humidity_inside = '%', humidity_outside = '%', barometer = 'hectoPascal', wind_dir = 'degrees', wind_speed = 'm/s', solar_rad = 'Watt/square metre', uv = '', evapotranspiration = 'millimetre', rain_rate = 'millimetre/hour', heat_index = 'degrees Celcius', dew_point = 'degrees Celcius', wind_chill = 'degrees Celcius', nanoseconds = 'nanoseconds', ext_timestamp = 'nanoseconds', data_reduction = '', trigger_pattern = '', baseline = 'ADC counts', std_dev = 'ADC counts', n_peaks = '', pulseheights = 'ADC counts', integrals = 'ADC counts nanonseconds', traces = '', event_rate = 'Hertz')
+    units = dict(event_id = None,
+                 timestamp = 'seconds',
+                 temp_inside = 'degrees Celcius',
+                 temp_outside = 'degrees Celcius',
+                 humidity_inside = '%',
+                 humidity_outside = '%',
+                 barometer = 'hectoPascal',
+                 wind_dir = 'degrees',
+                 wind_speed = 'm/s',
+                 solar_rad = 'Watt/square metre',
+                 uv = '',
+                 evapotranspiration = 'millimetre',
+                 rain_rate = 'millimetre/hour',
+                 heat_index = 'degrees Celcius',
+                 dew_point = 'degrees Celcius',
+                 wind_chill = 'degrees Celcius',
+                 nanoseconds = 'nanoseconds',
+                 ext_timestamp = 'nanoseconds',
+                 data_reduction = '',
+                 trigger_pattern = '',
+                 baseline = 'ADC counts',
+                 std_dev = 'ADC counts',
+                 n_peaks = '',
+                 pulseheights = 'ADC counts',
+                 integrals = 'ADC counts nanonseconds',
+                 traces = '',
+                 event_rate = 'Hertz')
 
     print ''
     show_plot = query_yes_no('Do you want to see a plot of every individual fit for every plate?')
