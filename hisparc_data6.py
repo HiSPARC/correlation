@@ -38,7 +38,7 @@ print 'With this program you can download HiSPARC data, plot data and search for
 print ''
 
 
-download_question = query_yes_no('Do you want to download DATA?')# ask for user input
+download_question = query_yes_no('Do you want to download DATA?')
 stations = []
 plot_variable1 = []
 plot_variable2 = []
@@ -105,7 +105,7 @@ else:
 
 print ''
 
-plot_question = query_yes_no('Do you want to see a PLOT of your data (variable against timestamp)?')# ask for user input
+plot_question = query_yes_no('Do you want to see a PLOT of your data (variable against timestamp)?')
 
 if plot_question == True and download_question == False:
     use_downloaded_files = False
@@ -114,7 +114,7 @@ if plot_question == True and download_question == False:
     print 'Make sure it is located at: ' + os.getcwd()
 
 elif plot_question == True and download_question == True:
-    use_downloaded_files = query_yes_no('Do you want to use the data you downloaded earlier?')# ask for user input
+    use_downloaded_files = query_yes_no('Do you want to use the data you downloaded earlier?')
 
 else:
     pass
@@ -151,19 +151,17 @@ if plot_question == True and use_downloaded_files == False:
     kind_of_data_in_table = kind_of_data(list_files) # e.g.  [('data_s501_2011,6,30 - 2011,6,30.h5', True, True), ('data_s502_2011,6,30 - 2011,6,30.h5', True, False)]
     plot_variable1 = choose_one_variable(kind_of_data_in_table, stations) #e.g. plot_variable = [('event_rate','data_s501_2011,12,7 - 2011,12,8.h5','501','events','')]
     values1, times, returntype = plot_data(plot_variable1)
-
-
 else:
     pass
 
 
 print ''
-correlate_question = query_yes_no('Do you want to CORRELATE data?')# ask for user input
+correlate_question = query_yes_no('Do you want to CORRELATE data?')
 
 use_plotted_files = False
 
 if plot_question == True and correlate_question == True:
-    use_plotted_files = query_yes_no('Do you want to use the data you plotted earlier?')# ask for user input
+    use_plotted_files = query_yes_no('Do you want to use the data you plotted earlier?')
     if use_plotted_files == True:
 
         print ''
@@ -230,7 +228,7 @@ if correlate_question == True and download_question == False and use_plotted_fil
     print 'Make sure it is located at: ' + os.getcwd()
 
 elif correlate_question == True and download_question == True and use_plotted_files == False:
-    use_downloaded_files = query_yes_no('Do you want to use the data you downloaded earlier?')# ask for user input
+    use_downloaded_files = query_yes_no('Do you want to use the data you downloaded earlier?')
 
 else:
     pass
@@ -248,7 +246,7 @@ if correlate_question == True and use_downloaded_files == False and use_plotted_
     stations = []
     for i in range(1, int(number_of_stations)+1):
         print ''
-        station_ID = question_is_digit("Enter the station ID for station " + str(i) + ' ')
+        station_ID = question_is_digit("Enter the station ID for station " + str(i) + ': ')
 
         stations.append(station_ID)
         print ''
