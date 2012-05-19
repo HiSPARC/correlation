@@ -4,7 +4,7 @@ from query_yes_no import query_yes_no
 from get_number_of_variable_values import get_number_of_variable_values
 
 def func(x, a, b, c):
-    return a*(x-b)**2 + c
+    return a * (x - b)**2 + c
 
 # pulseheights_list = [array_day1(p_plate_1, p_plate_2, p_plate_3, p_plate_4), arrayday2(...) etc.]
 # plot_variable = [('pulseheights','data_s501_2011,12,7 - 2011,12,8.h5','501','events')]
@@ -47,17 +47,13 @@ def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates)
 
 
     try:
-
         for p in range(len(pulseheights_list)):
-
             try:
-
                 #print 'Time interval %d of %d.' % (pulseheights_list.index(p)+1, len(pulseheights_list))
 
                 MPV_MIPs = []
                 """
                 # check the number of scintillation plates
-
 
                 print pulseheights_list[p][:3]
                 p1,p2,p3,p4 = zip(*pulseheights_list[p])
@@ -166,13 +162,10 @@ def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates)
                             # Therefore (bins[:-1] + bins[1:])/2 = [(0+500)/2 , (500+1000)/2, (1000+1500)/2]
                             #                                       = [ 250      ,  750        , 1250 ] i.e. the x-value for the CENTER side of each bin
 
-
                             del bins
                             #print bin_centers
 
                             plt.clf()
-
-
 
                             try:
                                 popt, pcov = curve_fit(func, bin_centers, values,[1,MPV_value,1])
@@ -224,7 +217,6 @@ def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates)
                             print ''
                             success = False
 
-
                         else:
                             MPV_MIPs.append(MPV_value)
                             print ''
@@ -243,7 +235,6 @@ def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates)
                                 print 'Close plot to continue...'
                                 plt.show()
 
-
                     elif skip == True:
                         MPV_MIPs.append(None)
                 print '------------------------------------------------------------'
@@ -251,9 +242,9 @@ def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates)
                 timing.append(time[p])
 
             except ValueError:
-
                 print 'Error'
 
     except ValueError:
         print 'Error'
+
     return MPV_list, number_of_plates,timing
