@@ -1,5 +1,6 @@
 # Specific
 *.h5
+*.png
 
 # Python
 *.pyc
