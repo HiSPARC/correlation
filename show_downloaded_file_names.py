@@ -6,11 +6,6 @@ def show_downloaded_file_names(kind_of_data_in_table):
     print '|                                                             |'
     print '|                                        SHOWER WEATHER       |'
     print '|                                                             |'
-    blank = '|                                                             |'
     for i in kind_of_data_in_table:
-        length_string = len(i[0]) + len(str(i[1])) + len(str(i[2]))
-        if length_string <= 51:
-            print '| ' + str(i) + blank[2+length_string:]
-        else:
-            print i[0], length_string
+        print '| %-38s %-6s %-6s        |' % (i[0], str(i[1]), str(i[2]))
     print '|_____________________________________________________________|'
