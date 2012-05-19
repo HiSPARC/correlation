@@ -177,7 +177,7 @@ def download_part(user_hisparc_station_id, start, stop):
     hisp_station = int(user_hisparc_station_id)
     tree = '/s' + user_hisparc_station_id
     path = 'data.root.s' + user_hisparc_station_id
-    filename = 'data_s%d_%s_%s.h5' % (user_hisparc_station_id,
+    filename = 'data_s%d_%s_%s.h5' % (hisp_station,
                                       start.strftime('%Y,%m,%d'),
                                       stop.strftime('%Y,%m,%d'))
 
