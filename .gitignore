@@ -1,3 +1,6 @@
+# Specific
+*.h5
+
 # Python
 *.pyc
 *.pyo
