@@ -4,5 +4,5 @@ def question_is_digit_with_plate_constraint(question):
         if str.isdigit(answer) and int(answer) <= 4:
             break
         else:
-            print "Oops!  That was no valid number.  Try again..."
+            print "Oops! That was no valid number. Try again..."
     return answer

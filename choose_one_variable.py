@@ -10,7 +10,7 @@ def choose_one_variable(kind_of_data_in_table, stations):
             print '-You have data for station %s' % (str(station))
 
         print ''
-        station_ID = question_is_digit_station('Enter the station ID that you want to use. ',stations)
+        station_ID = question_is_digit_station('Enter the station ID that you want to use: ', stations)
     else:
         station_ID = stations[0]
 

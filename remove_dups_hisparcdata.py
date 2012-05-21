@@ -10,6 +10,7 @@ def remove_dups(data, group):
     """
     events = group.events
 
+    # This could be optimized to not load the whole table in memory at once.
     ts = [x for x in enumerate(events[:]['ext_timestamp'])]
     ts.sort(key=operator.itemgetter(1))
 
