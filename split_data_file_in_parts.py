@@ -33,14 +33,12 @@ def split_data_file_in_parts(variable, seconds):
     for i in range(len(variable)):
 
         station_ID = variable[i][2]
-        data = tables.openFile(variable[i][1],'r')
+        with tables.openFile(variable[i][1],'r') as data:
+            tree = "data.root.s%s.%s.col('timestamp')" % (station_ID, variable[i][3])
+            timestamps = eval(tree)
 
-        tree = 'data.root.s' + station_ID + "." + variable[i][3] + "[:]['timestamp']"
-        ts = eval(tree)
-
-        tree = 'data.root.s' + station_ID + "." + variable[i][3] + "[:]['" + variable[i][0] + "']"
-        var_data = eval(tree)
-        data.close()
+            tree = "data.root.s%s.%s.col('%s')" % (station_ID, variable[i][3], variable[i][0])
+            var_data = eval(tree)
 
         list = []
         if len(var_data.shape) != 1: # check if it is an array of values
@@ -75,7 +73,7 @@ def split_data_file_in_parts(variable, seconds):
             'weird!'
             pass
 
-        dat_sorted_part = sorted(zip(ts,list))
+        dat_sorted_part = sorted(zip(timestamps, list))
         dat_sorted.extend(dat_sorted_part)
 
     begin = dat_sorted[0][0] # set begin equal to first timestamp e.g. 1323302400
@@ -96,8 +94,8 @@ def split_data_file_in_parts(variable, seconds):
 
 
     # make list with the timestamps in the middle of every time interval (for later use in plot)
-    times_timestamp = [dat_sorted[0][0] + (seconds/2) + i*seconds for i in range(len(time_interval_list))]
-
+    times_timestamp = [dat_sorted[0][0] + (seconds / 2) + i * seconds
+                       for i in range(len(time_interval_list))]
 
     # e.g. time_interval_list = [1000000000, 1000001000, 100002000, 1000003000, 1000004000]
     # e.g seconds = 1000

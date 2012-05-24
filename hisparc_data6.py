@@ -120,14 +120,14 @@ if plot_question == True and use_downloaded_files == False:
     station_ID = question_is_digit("Enter the station ID that you want to use in your analysis ( e.g. 501 ) ")
     stations.append(station_ID)
     print ''
-    number_of_files = question_is_digit("Enter the NUMBER of FILENAMES for station " + station_ID + " that you want to use in your analysis ( e.g. 6 ): ")
+    number_of_files = question_is_digit("Enter the NUMBER of FILENAMES for station %s that you want to use in your analysis ( e.g. 6 ): " % station_ID)
     print ''
     print "You are going to enter filenames ( e.g. data_s501_2011,7,21_2011,7,22.h5 )"
     print 'Enter the filenames in CHRONOLOGICAL ORDER. '
     print ''
     for j in range(1, int(number_of_files)+1):
         while True:
-            filename = raw_input('For station %d enter filename number %d: ' % (station_ID, j))
+            filename = raw_input('For station %s enter filename number %d: ' % (station_ID, j))
             ID = get_station_ID_from_filename(filename)
             if ID in stations:
                 list_files.append(filename) # pas 'kind of data' aan zodat kijkt of hetzelfde station
@@ -161,14 +161,14 @@ if plot_question == True and correlate_question == True:
 
         stations.append(station_ID)
         print ''
-        number_of_files = question_is_digit("Enter the NUMBER of FILENAMES for station " + station_ID + " that you want to use in your analysis ( e.g. 6 ): ")
+        number_of_files = question_is_digit("Enter the NUMBER of FILENAMES for station %s that you want to use in your analysis ( e.g. 6 ): " % station_ID)
         print ''
         print "You are going to enter filenames ( e.g. data_s501_2011,7,21_2011,7,21.h5 )"
         print 'Enter the filenames in CHRONOLOGICAL ORDER. '
         print ''
         for j in range(1, int(number_of_files) + 1):
             while True:
-                filename = raw_input('For station %d enter filename number %d: ' % (station_ID, j))
+                filename = raw_input('For station %s enter filename number %d: ' % (station_ID, j))
                 ID = get_station_ID_from_filename(filename)
                 print stations
                 if ID in stations:
@@ -212,7 +212,7 @@ elif correlate_question == True and download_question == True and use_plotted_fi
 if correlate_question == True and use_downloaded_files == True and use_plotted_files == False:
     #e.g. variable1 = [('event_rate','data_s501_2011,12,7_2011,12,8.h5','501','events')]
     variable1, variable2 = choose_variables_for_correlation(kind_of_data_in_table, stations)
-    filen = interpolate(variable1,variable2) # e.g. cor_data_barometer_501_event_rate_502.h5
+    filen = interpolate(variable1, variable2) # e.g. cor_data_barometer_501_event_rate_502.h5
     least_squares_fit(filen, variable1, variable2)
 
 if correlate_question == True and use_downloaded_files == False and use_plotted_files == False:
@@ -226,7 +226,7 @@ if correlate_question == True and use_downloaded_files == False and use_plotted_
 
         stations.append(station_ID)
         print ''
-        number_of_files = question_is_digit("Enter the NUMBER of FILENAMES for station %d that you want to use in your analysis ( e.g. 6 ): " % station_ID)
+        number_of_files = question_is_digit("Enter the NUMBER of FILENAMES for station %s that you want to use in your analysis ( e.g. 6 ): " % station_ID)
         print ''
         print "You are going to enter filenames ( e.g. data_s501_2011,7,21_2011,7,21.h5 )"
         print 'Enter the filenames in CHRONOLOGICAL ORDER. '

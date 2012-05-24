@@ -10,23 +10,25 @@ def remove_dups_weatherdata(data, group):
     """
     events = group.weather
 
-    ts = [x for x in enumerate(events[:]['timestamp'])]
-    ts.sort(key=operator.itemgetter(1))
+    timestamps = [x for x in enumerate(events.col('timestamp'))]
+    timestamps.sort(key=operator.itemgetter(1))
 
     prev = 0
-    clist = []
-    for i, t in ts:
-        if t != prev:
-            clist.append(i)
-        prev = t
+    unique_list = []
+    for unique_id, timestamp in timestamps:
+        if timestamp != prev:
+            unique_list.append(unique_id)
+        prev = timestamp
 
-    clist.sort()
-    print "Removing %d duplicate rows of weather data" % (len(events) - len(clist))
+    unique_list.sort()
 
-    if len(clist) != len(events):
+    print ("Removing %d duplicate rows of weather data" %
+           (len(events) - len(unique_list)))
+
+    if len(unique_list) != len(events):
         tmptable = data.createTable(group, 't__events',
                                     description=events.description)
-        rows = events.readCoordinates(clist)
+        rows = events.readCoordinates(unique_list)
         tmptable.append(rows)
         tmptable.flush()
 

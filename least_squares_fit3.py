@@ -35,6 +35,7 @@ def lose_nans(x,y):
 def get_date_interval_from_file_names(var1, var2):
     first_file = var1[0][1]
     station_ID = var1[0][2]
+    # ADL: I may have broken this, I changed the separator betweens start stop to '_'
     inter_string1a = first_file.partition(station_ID + '_')
     inter_string1b = inter_string1a[2].partition(' - ')
     start_date_interval = inter_string1b[0]
@@ -48,13 +49,6 @@ def get_date_interval_from_file_names(var1, var2):
 
 def least_squares_fit(filename, variable1,variable2):
 
-    # open data file
-    data = tables.openFile(filename, 'r')
-
-    # fetch values variable 1 and 2
-    variable_1 = data.root.correlation.table[:]['variable1']
-    variable_2 = data.root.correlation.table[:]['variable2']
-    data.close()
     units = dict(event_id = '' ,
                  timestamp = 'seconds',
                  temp_inside = 'degrees Celcius',
@@ -83,6 +77,10 @@ def least_squares_fit(filename, variable1,variable2):
                  traces = '',
                  event_rate = 'Hz')
 
+    with tables.openFile(filename, 'r') as data:
+        # fetch values variable 1 and 2
+        variable_1 = data.root.correlation.table[:]['variable1']
+        variable_2 = data.root.correlation.table[:]['variable2']
 
     y_axis = query_yes_no("Do you want to plot '" + variable1[0][0] + "' on the y-axis?")
 

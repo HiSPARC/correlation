@@ -10,25 +10,25 @@ def remove_dups(data, group):
     """
     events = group.events
 
-    # This could be optimized to not load the whole table in memory at once.
-    ts = [x for x in enumerate(events[:]['ext_timestamp'])]
-    ts.sort(key=operator.itemgetter(1))
+    timestamps = [x for x in enumerate(events.col('ext_timestamp'))]
+    timestamps.sort(key=operator.itemgetter(1))
 
     prev = 0
-    clist = []
-    for i, t in ts:
-        if t != prev:
-            clist.append(i)
-        prev = t
+    unique_list = []
+    for unique_id, timestamp in timestamps:
+        if timestamp != prev:
+            unique_list.append(unique_list)
+        prev = timestamp
 
-    clist.sort()
-    print "Removing %d duplicate rows of shower data" % (len(events) - len(clist))
+    unique_list.sort()
 
+    print ("Removing %d duplicate rows of shower data" %
+           (len(events) - len(unique_list)))
 
-    if len(clist) != len(events):
+    if len(unique_list) != len(events):
         tmptable = data.createTable(group, 't__events',
                                     description=events.description)
-        rows = events.readCoordinates(clist)
+        rows = events.readCoordinates(unique_list)
         tmptable.append(rows)
         tmptable.flush()
 

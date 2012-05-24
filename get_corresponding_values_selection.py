@@ -41,17 +41,14 @@ def get_corresponding_values_selection(plot_variable2, times):
 
     for i in range(len(plot_variable2)):
         # open datafile
-        data = tables.openFile(plot_variable2[i][1], 'r')
+        with tables.openFile(plot_variable2[i][1], 'r') as data:
+            # get variable values from data file
+            var_string = "data.root.s%s.%s.col('%s')" % (plot_variable2[i][2], plot_variable2[i][3], plot_variable2[i][0])
+            var = eval(var_string)
 
-        # get variable values from data file
-        var_string = 'data.root.s' +  plot_variable2[i][2]+ '.' + plot_variable2[i][3] + "[:]['" + plot_variable2[i][0] + "']"
-        var = eval(var_string)
-
-        # get timestamp values corresponding to the variable values from datafile
-        ts_string = 'data.root.s' +  plot_variable2[i][2]+ '.' + plot_variable2[i][3] + "[:]['timestamp']"
-        ts = eval(ts_string)
-
-        data.close()
+            # get timestamp values corresponding to the variable values from datafile
+            ts_string = "data.root.s%s.%s.col('timestamp')" % (plot_variable2[i][2], plot_variable2[i][3])
+            ts = eval(ts_string)
 
         data_sorted.extend(sorted(zip(ts, var))) # one list with timestamps and variable values
 
