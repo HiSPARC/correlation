@@ -48,7 +48,6 @@ def get_date_interval_from_file_names(var1, var2):
 
 def least_squares_fit(filename, variable1,variable2):
 
-    units = dict(event_id = '' , timestamp = 'seconds', temp_inside = 'degrees Celcius', temp_outside = 'degrees Celcius', humidity_inside = '%', humidity_outside = '%', barometer = 'hectoPascal', wind_dir = 'degrees', wind_speed = 'm/s', solar_rad = 'Watt/m^2', uv = '', evapotranspiration = 'millimetre', rain_rate = 'millimetre/hour', heat_index = 'degrees Celcius', dew_point = 'degrees Celcius', wind_chill = 'degrees Celcius', nanoseconds = 'nanoseconds', ext_timestamp = 'nanoseconds', data_reduction = '', trigger_pattern = '', baseline = 'ADC counts', std_dev = 'ADC counts', n_peaks = '', pulseheights = 'ADC counts', integrals = 'ADC counts nanonseconds', traces = '', event_rate = 'Hz')
     # open data file
     data = tables.openFile(filename, 'r')
 
@@ -56,23 +55,51 @@ def least_squares_fit(filename, variable1,variable2):
     variable_1 = data.root.correlation.table[:]['variable1']
     variable_2 = data.root.correlation.table[:]['variable2']
     data.close()
+    units = dict(event_id = '' ,
+                 timestamp = 'seconds',
+                 temp_inside = 'degrees Celcius',
+                 temp_outside = 'degrees Celcius',
+                 humidity_inside = '%',
+                 humidity_outside = '%',
+                 barometer = 'hectoPascal',
+                 wind_dir = 'degrees',
+                 wind_speed = 'm/s',
+                 solar_rad = 'Watt/m^2',
+                 uv = '',
+                 evapotranspiration = 'millimetre',
+                 rain_rate = 'millimetre/hour',
+                 heat_index = 'degrees Celcius',
+                 dew_point = 'degrees Celcius',
+                 wind_chill = 'degrees Celcius',
+                 nanoseconds = 'nanoseconds',
+                 ext_timestamp = 'nanoseconds',
+                 data_reduction = '',
+                 trigger_pattern = '',
+                 baseline = 'ADC counts',
+                 std_dev = 'ADC counts',
+                 n_peaks = '',
+                 pulseheights = 'ADC counts',
+                 integrals = 'ADC counts nanonseconds',
+                 traces = '',
+                 event_rate = 'Hz')
+
 
     y_axis = query_yes_no("Do you want to plot '" + variable1[0][0] + "' on the y-axis?")
 
     if len(variable_1.shape) != 1:
         print 'There are %d plates with an individual %s value.' % (variable_1.shape[1], variable1[0][0])
         plate_number1 = int(question_is_digit_plate("Enter the plate number that you want to you use in your correlation analysis ( e.g. '1' ): ", variable_1.shape[1]))
-        variable_1 = variable_1[:,plate_number1-1]
+        variable_1 = variable_1[:, plate_number1 - 1]
 
     if len(variable_2.shape) != 1:
         print 'There are %d plates with an individual %s value.' % (variable_2.shape[1], variable2[0][0])
         plate_number2 = int(question_is_digit_plate("Enter the plate number that you want to you use in your correlation analysis ( e.g. '1' ): ", variable_2.shape[1]))
-        variable_2 = variable_2[:,plate_number2-1]
+        variable_2 = variable_2[:, plate_number2 - 1]
 
     if y_axis == True:
         y = variable_1 # e.g. 'event_rates'
         x = variable_2 # e.g. 'barometric pressure'
-        x,y = lose_nans(x,y)
+        x, y = lose_nans(x, y)
 
     elif y_axis == False:
         x = variable_1 # e.g. 'event_rates'
@@ -173,10 +200,10 @@ def least_squares_fit(filename, variable1,variable2):
     # Plot the data along with the fitted line:
 
     if(len(x) > 500000):
-        x,y = downsample(x,y)
+        x, y = downsample(x, y)
 
     plt.plot(x, y, 'o', label='Original data', markersize=1)
-    plt.plot(x, a*x + b, 'r', label='Fitted line')
+    plt.plot(x, a * x + b, 'r', label='Fitted line')
 
     if y_axis == True:
         plt.ylabel(variable1[0][0] + ' (' + units[variable1[0][0]] + ')')
@@ -194,10 +221,10 @@ def least_squares_fit(filename, variable1,variable2):
     inter_filename = filename.replace('.h5', '')
     fname = inter_filename + ' ' + start_date_interval + ' - ' + stop_date_interval
 
-    plt.savefig(fname +".png")
+    plt.savefig(fname + ".png")
     plt.show()
 
-    fit_info = open(fname + '.txt','w')
+    fit_info = open(fname + '.txt', 'w')
     fit_info.write(tit)
     fit_info.write("%s\n" % (''))
     fit_info.write(str(pearson_text))

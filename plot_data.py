@@ -35,16 +35,14 @@ def plot_data(plot_variable):
         if MPV == True:
 
             print ''
-            interval = question_is_digit("Select the time interval (in seconds) over which the MPV value must be calculated. ( e.g. for a day you enter '86400' ) " )
+            interval = question_is_digit("Select the time interval (in seconds) over which the MPV value must be calculated. ( e.g. for a day you enter '86400' ) ")
             seconds = int(interval)
-            variable_parts, time, number_of_plates = split_data_file_in_parts(plot_variable,seconds)
-            #e.g. variable_parts = [[p1,p2...pn], [p1,p2...pn],....]
-            # time [t1,t2,...tn] times are timestamps in the middle of every time interval
-
-
+            variable_parts, time, number_of_plates = split_data_file_in_parts(plot_variable, seconds)
+            #e.g. variable_parts = [[p1, p2...pn], [p1, p2...pn], ....]
+            # time [t1, t2...tn] times are timestamps in the middle of every time interval
 
             if plot_variable[0][0] == 'pulseheights':
-                MPV_list, number_of_plates,timing = find_MPV_pulseheights(variable_parts,plot_variable,time, number_of_plates)
+                MPV_list, number_of_plates, timing = find_MPV_pulseheights(variable_parts, plot_variable,time, number_of_plates)
 
                 #times = array(time) necessary?
 
@@ -63,24 +61,18 @@ def plot_data(plot_variable):
 
                 filename = create_correlation_table(plot_variable1,plot_variable2, values1, values2,seconds)
 
-
-
             elif plot_variable[0][0] == 'integrals':
                 MPV_list, number_of_plates = find_MPV_integrals(variable_parts,plot_variable)
             else:
                 print 'problem'
 
-
-
             values = array(MPV_list)
 
-
             for i in range(number_of_plates):
-                y = values[:,i]
-
-                plt.plot(time_interval_array,y)
                 plt.xlabel('time')
                 plt.ylabel(plot_variable[0][0] + ' (' + units[plot_variable[0][0]] + ')')
+                y = values[:, i]
+                plt.plot(time_interval_array, y)
 
             # create filename for correlation table from data filenames
             intermediate1 = plot_variable[0][1].replace('data_s' + str(plot_variable[0][2]) + '_', '')
@@ -131,13 +123,13 @@ def plot_data(plot_variable):
                 number_of_plates = len(plate_list)
 
                 if number_of_plates == 2:
-                    plate1.extend(list(variable[:,0]))
-                    plate2.extend(list(variable[:,1]))
+                    plate1.extend(list(variable[:, 0]))
+                    plate2.extend(list(variable[:, 1]))
                 elif number_of_plates == 4:
-                    plate1.extend(list(variable[:,0]))
-                    plate2.extend(list(variable[:,1]))
-                    plate3.extend(list(variable[:,2]))
-                    plate4.extend(list(variable[:,3]))
+                    plate1.extend(list(variable[:, 0]))
+                    plate2.extend(list(variable[:, 1]))
+                    plate3.extend(list(variable[:, 2]))
+                    plate4.extend(list(variable[:, 3]))
                 else:
                     print 'problem'
 
@@ -157,23 +149,24 @@ def plot_data(plot_variable):
             whole = query_yes_no('Do you want to PLOT this whole time interval')
 
             if whole == True:
-                x = dat_sorted1[:,0]
+                x = dat_sorted1[:, 0]
                 times = x
                 x = [datetime.fromtimestamp(i) for i in x]
-                y = dat_sorted1[:,1]
-                plt.plot(x,y)
-                y = dat_sorted2[:,1]
-                plt.plot(x,y)
-                plt.ylabel(plot_variable[0][0] + ' (' + units[plot_variable[0][0]] + ')')
+                y = dat_sorted1[:, 1]
+                plt.plot(x, y)
+                y = dat_sorted2[:, 1]
+                plt.plot(x, y)
+                plt.ylabel('%s (%s)' % (plot_variable[0][0], units[plot_variable[0][0]]))
 
-                values = array(zip(dat_sorted1[:,1],dat_sorted2[:,1]))
+                values = array(zip(dat_sorted1[:, 1], dat_sorted2[:, 1]))
 
                 if number_of_plates == 4:
-                    y = dat_sorted3[:,1]
-                    plt.plot(x,y)
-                    y = dat_sorted4[:,1]
-                    plt.plot(x,y)
-                    values = array(zip(dat_sorted1[:,1],dat_sorted2[:,1],dat_sorted3[:,1],dat_sorted4[:,1]))
+                    y = dat_sorted3[:, 1]
+                    plt.plot(x, y)
+                    y = dat_sorted4[:, 1]
+                    plt.plot(x, y)
+                    values = array(zip(dat_sorted1[:, 1], dat_sorted2[:, 1],
+                                       dat_sorted3[:, 1], dat_sorted4[:, 1]))
 
                 plt.grid(True)
                 plt.show()
@@ -213,41 +206,42 @@ def plot_data(plot_variable):
                     plot_list3 = []
                     plot_list4 = []
 
-                    for t,v in dat_sorted1:
+                    for t, v in dat_sorted1:
                         if t > dat_sorted1[0][0] +  x_lim_low and t < dat_sorted1[0][0] + x_lim_up:
-                             plot_list1.append([t,v])
+                             plot_list1.append([t, v])
 
                     plot_list1 = array(plot_list1)
 
-                    for t,v in dat_sorted2:
+                    for t, v in dat_sorted2:
                         if t > dat_sorted2[0][0] +  x_lim_low and t < dat_sorted2[0][0] + x_lim_up:
-                             plot_list2.append([t,v])
+                             plot_list2.append([t, v])
 
                     plot_list2 = array(plot_list2)
 
                     values = array(zip(plot_list1[:,1],plot_list2[:,1]))
 
                     if number_of_plates == 4:
-                        for t,v in dat_sorted3:
+                        for t, v in dat_sorted3:
                             if t > dat_sorted3[0][0] +  x_lim_low and t < dat_sorted3[0][0] + x_lim_up:
-                                 plot_list3.append([t,v])
+                                 plot_list3.append([t, v])
 
                         plot_list3 = array(plot_list3)
 
-                        for t,v in dat_sorted4:
+                        for t, v in dat_sorted4:
                             if t > dat_sorted4[0][0] +  x_lim_low and t < dat_sorted4[0][0] + x_lim_up:
-                                 plot_list4.append([t,v])
+                                 plot_list4.append([t, v])
 
                         plot_list4 = array(plot_list4)
 
-                        values = array(zip(plot_list1[:,1],plot_list2[:,1],plot_list3[:,1],plot_list4[:,1]))
+                        values = array(zip(plot_list1[:, 1], plot_list2[:, 1],
+                                           plot_list3[:, 1], plot_list4[:, 1]))
 
-                    times = plot_list1[:,0]
+                    times = plot_list1[:, 0]
                     x = [datetime.fromtimestamp(i) for i in times]
 
-                    plt.plot(x,plot_list1[:,1])
-                    plt.plot(x,plot_list2[:,1])
                     plt.ylabel(plot_variable[0][0] + ' (' + units[plot_variable[0][0]] + ')')
+                    plt.plot(x, plot_list1[:, 1])
+                    plt.plot(x, plot_list2[:, 1])
 
                     returntype = 'part'
 
@@ -268,7 +262,7 @@ def plot_data(plot_variable):
         time_list = []
 
         for i in range(len(plot_variable)):
-            data = tables.openFile(plot_variable[i][1],'r')
+            data = tables.openFile(plot_variable[i][1], 'r')
 
             tree_variable = 'data.root.s' + plot_variable[i][2] + '.' + plot_variable[i][3] + "[:]['" + plot_variable[i][0] + "']"
             variable = eval(tree_variable)
@@ -289,13 +283,13 @@ def plot_data(plot_variable):
 
         if whole == True:
             dat_sorted = array(dat_sorted)
-            values = dat_sorted[:,1]
+            values = dat_sorted[:, 1]
 
-            times = dat_sorted[:,0]
+            times = dat_sorted[:, 0]
             x = [datetime.fromtimestamp(i) for i in times]
 
-            plt.plot(x,values)
             plt.ylabel(plot_variable[0][0] + ' (' + units[plot_variable[0][0]] + ')')
+            plt.plot(x, values)
             plt.grid(True)
             plt.show()
             returntype = 'whole'
@@ -334,19 +328,19 @@ def plot_data(plot_variable):
 
                 for t,v in dat_sorted:
                     if t > dat_sorted[0][0] +  x_lim_low and t < dat_sorted[0][0] + x_lim_up:
-                         plot_list.append([t,v])
+                         plot_list.append([t, v])
 
                 plot_list = array(plot_list)
 
                 returntype = 'part'
 
-                timing = plot_list[:,0]
-                values = plot_list[:,1]
+                timing = plot_list[:, 0]
+                values = plot_list[:, 1]
 
                 x = [datetime.fromtimestamp(i) for i in timing]
 
-                plt.plot(x,plot_list[:,1])
                 plt.ylabel(plot_variable[0][0] + ' (' + units[plot_variable[0][0]] + ')')
+                plt.plot(x, plot_list[:, 1])
                 plt.grid(True)
                 plt.show()
 
@@ -369,7 +363,3 @@ values,times,type = plot_data(plot_variable)
 
 print type
 """
-
-
-
-

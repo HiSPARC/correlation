@@ -26,7 +26,7 @@ def get_number_of_variable_values(var_data):
 
     return number_of_plates
 
-def split_data_file_in_parts(variable,seconds):
+def split_data_file_in_parts(variable, seconds):
 
     dat_sorted = []
 
@@ -45,10 +45,10 @@ def split_data_file_in_parts(variable,seconds):
         list = []
         if len(var_data.shape) != 1: # check if it is an array of values
 
-            p1 = var_data[:,0]
-            p2 = var_data[:,1]
-            p3 = var_data[:,2]
-            p4 = var_data[:,3]
+            p1 = var_data[:, 0]
+            p2 = var_data[:, 1]
+            p3 = var_data[:, 2]
+            p4 = var_data[:, 3]
             del var_data
 
             plate_list = []
@@ -64,9 +64,9 @@ def split_data_file_in_parts(variable,seconds):
             number_of_plates = len(plate_list)
 
             if number_of_plates == 4:
-                list = zip(p1.tolist(),p2.tolist(),p3.tolist(),p4.tolist())
+                list = zip(p1.tolist(), p2.tolist(), p3.tolist(), p4.tolist())
             elif number_of_plates == 2:
-                list = zip(p1.tolist(),p2.tolist())
+                list = zip(p1.tolist(), p2.tolist())
 
         elif len(var_data.shape) == 1: # check if it is an array of values
             list = var_data.tolist()
@@ -78,9 +78,7 @@ def split_data_file_in_parts(variable,seconds):
         dat_sorted_part = sorted(zip(ts,list))
         dat_sorted.extend(dat_sorted_part)
 
-
     begin = dat_sorted[0][0] # set begin equal to first timestamp e.g. 1323302400
-
 
     # make list with the index of every first of every time interval of seconds (e.g. every hour if 'seconds' = 86400)
 
@@ -113,7 +111,7 @@ def split_data_file_in_parts(variable,seconds):
 
     for j in range(len(time_interval_list)):
         if j != range(len(time_interval_list))[-1]:
-            time_chunks.append(dat_sorted[time_interval_list[j]:time_interval_list[j+1]])
+            time_chunks.append(dat_sorted[time_interval_list[j]:time_interval_list[j + 1]])
         else:
             time_chunks.append(dat_sorted[time_interval_list[j]:len(dat_sorted)])
 

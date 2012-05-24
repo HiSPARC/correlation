@@ -3,13 +3,15 @@ from numpy import array
 import matplotlib.pyplot as plt
 import datetime
 
+
 def drop(L, N):
-    return [x for i,x in enumerate(L) if i % N == 0]
+    return [x for i, x in enumerate(L) if i % N == 0]
+
 
 def downsample(x,y):
 
-    x = array(drop (x,ceil(len(x) / 500000.0)))
-    y = array(drop (y,ceil(len(y) / 500000.0)))
+    x = array(drop(x, ceil(len(x) / 500000.0)))
+    y = array(drop(y, ceil(len(y) / 500000.0)))
 
     return x, y
 

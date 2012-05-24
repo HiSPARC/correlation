@@ -220,7 +220,7 @@ if correlate_question == True and use_downloaded_files == False and use_plotted_
     number_of_stations = question_is_digit_with_constraint("Enter the NUMBER of STATION IDs that you want to use in your analysis ( e.g. 2 ): ")
     list_files = []
     stations = []
-    for i in range(1, int(number_of_stations)+1):
+    for i in range(1, int(number_of_stations) + 1):
         print ''
         station_ID = question_is_digit("Enter the station ID for station %d: " % i)
 
@@ -244,5 +244,5 @@ if correlate_question == True and use_downloaded_files == False and use_plotted_
     kind_of_data_in_table = kind_of_data(list_files) # e.g.  [('data_s501_2011,6,30_2011,6,30.h5', True, True), ('data_s502_2011,6,30_2011,6,30.h5', True, False)]
 
     variable1, variable2 = choose_variables_for_correlation(kind_of_data_in_table, stations) # e.g. [('barometer', 'data_s501_2011,6,30_2011,6,30.h5', '501', 'weather')], [('event_rate', 'data_s502_2011,6,30_2011,6,30.h5', '502', 'events')]
-    filen = interpolate(variable1,variable2) # e.g. cor_data_barometer_501_event_rate_502.h5
+    filen = interpolate(variable1, variable2) # e.g. cor_data_barometer_501_event_rate_502.h5
     least_squares_fit(filen, variable1, variable2)

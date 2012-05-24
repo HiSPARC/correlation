@@ -1,7 +1,7 @@
 from scipy import array
 import tables
 
-def get_corresponding_values_selection(plot_variable2,times):
+def get_corresponding_values_selection(plot_variable2, times):
     low_limit = dict(temp_inside = -200,
                      temp_outside = -200,
                      humidity_inside = 0,
@@ -53,17 +53,17 @@ def get_corresponding_values_selection(plot_variable2,times):
 
         data.close()
 
-        data_sorted.extend(sorted(zip(ts,var))) # one list with timestamps and variable values
+        data_sorted.extend(sorted(zip(ts, var))) # one list with timestamps and variable values
 
     if plot_variable2[0][0] in low_limit:
         var_list_without_bad_data2 = []
         bad_data2 = []
 
-        for t2,v2 in data_sorted:
-            if v2 > low_limit[plot_variable2[0][0]] and  v2 < high_limit[plot_variable2[0][0]]:
-                var_list_without_bad_data2.append((t2,v2))
+        for t2, v2 in data_sorted:
+            if v2 > low_limit[plot_variable2[0][0]] and v2 < high_limit[plot_variable2[0][0]]:
+                var_list_without_bad_data2.append((t2, v2))
             else:
-                bad_data2.append((t2,v2))
+                bad_data2.append((t2, v2))
 
         if bad_data2:
             print 'Removed %d rows of bad %s data.' % (len(data_sorted) - len(var_list_without_bad_data2), plot_variable2[0][0])
@@ -77,7 +77,7 @@ def get_corresponding_values_selection(plot_variable2,times):
 
     for ts,var in data_sorted:
         if ts > times[0] and ts < times[-1]:
-            variable2_values.append([ts,var])
+            variable2_values.append([ts, var])
 
     variable2_values = array(variable2_values)
 
