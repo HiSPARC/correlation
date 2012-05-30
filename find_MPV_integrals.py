@@ -4,12 +4,12 @@ from scipy import array
 from query_yes_no import query_yes_no
 
 def func(x, a, b, c):
-    return a*(x-b)**2 + c
+    return a * (x - b)**2 + c
 
 # pulseheights_list = [array_day1(p_plate_1, p_plate_2, p_plate_3, p_plate_4), arrayday2(...) etc.]
 # plot_variable = [('pulseheights','data_s501_2011,12,7 - 2011,12,8.h5','501','events')]
 
-def find_MPV_integrals(pulseheights_list,plot_variable):
+def find_MPV_integrals(pulseheights_list, plot_variable):
 
     units = dict(event_id = '' ,
                  timestamp = 'seconds',
@@ -52,26 +52,17 @@ def find_MPV_integrals(pulseheights_list,plot_variable):
         MPV_MIPs = []
 
         check = p[0]
-        plate_list = []
-        for val in check:
-            if val == -1:
-                pass
-            else:
-                plate_list.append(val)
-
+        plate_list = [val for val in check if val != -1]
         number_of_plates = len(plate_list)
 
         for i in range(number_of_plates):
 
             print ''
-            print 'plate ', i+1
+            print 'plate ', i + 1
 
-            p_plate_total = p[:,i]
-            #p_plate_total = []
+            p_plate_total = array(p[:, i])
 
-            p_plate_total = array(p_plate_total)
-
-            hist = plt.hist(p_plate_total,750)
+            hist = plt.hist(p_plate_total, 750)
             binsize = hist[0]
             value = hist[1]
             del hist
@@ -87,7 +78,7 @@ def find_MPV_integrals(pulseheights_list,plot_variable):
                     break
 
             for h in range(len(binsize)):
-                if h > foton_bin and binsize[h+1] > binsize[h]:
+                if h > foton_bin and binsize[h + 1] > binsize[h]:
                     lowest_bin = h
                     lowest_p = value[h]
                     break
@@ -149,10 +140,8 @@ def find_MPV_integrals(pulseheights_list,plot_variable):
                 list = sorted(list)
                 MPV_MIPs.append(list[0][2])
 
-
-
                 print ''
-                afw = "Afwijking  = %g" % list[0][0]
+                afw = "Deviation  = %g" % list[0][0]
                 print afw
                 ap = "a = %g" % list[0][1]
                 print ap
@@ -163,7 +152,6 @@ def find_MPV_integrals(pulseheights_list,plot_variable):
                 kp = "k = %g" % list[0][4]
                 print kp
                 print ''
-
 
                 if show_plot:
                     hist = plt.hist(p_plate_total,750)
@@ -176,9 +164,7 @@ def find_MPV_integrals(pulseheights_list,plot_variable):
                 print 'MPV value = %.2f %s ' % (list[0][2],units[plot_variable[0][0]])
                 print ''
 
-
             else:
-
                 MPV_MIPs.append(MPV_value)
                 print ''
                 print 'WARNING: Bad fit'
@@ -196,14 +182,13 @@ def find_MPV_integrals(pulseheights_list,plot_variable):
                     print 'Close plot to continue...'
                     plt.show()
 
-
             #print MPV_MIPs
 
         MPV_list.append(MPV_MIPs)
 
     return MPV_list, number_of_plates
 
-# pulseheights_list = [array_day1(p_plate_1, p_plate_2, p_plate_3, p_plate_4), arrayday2(...) etc.]
+#pulseheights_list = [array_day1(p_plate_1, p_plate_2, p_plate_3, p_plate_4), arrayday2(...) etc.]
 #plot_variable = [('pulseheights','data_s501_2011,12,7 - 2011,12,8.h5','501','events')]
 
 #find_MPV_integrals(pulseheights_list,plot_variable)
