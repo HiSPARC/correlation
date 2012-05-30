@@ -10,7 +10,7 @@ def func(x, a, b, c):
 # plot_variable = [('pulseheights','data_s501_2011,12,7 - 2011,12,8.h5','501','events')]
 # time = [t0,t1,t2...]
 
-def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates):
+def find_MPV_pulseheights(pulseheights_list, plot_variable, time, number_of_plates):
 
     units = dict(event_id = None,
                  timestamp = 'seconds',
@@ -45,11 +45,10 @@ def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates)
     MPV_list = []
     timing = []
 
-
     try:
         for p in range(len(pulseheights_list)):
             try:
-                #print 'Time interval %d of %d.' % (pulseheights_list.index(p)+1, len(pulseheights_list))
+                #print 'Time interval %d of %d.' % (pulseheights_list.index(p) + 1, len(pulseheights_list))
 
                 MPV_MIPs = []
                 """
@@ -81,12 +80,12 @@ def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates)
 
                 for i in range(number_of_plates):
 
-                    print 'plate ', i+1
+                    print 'plate ', i + 1
 
-                    p_plate_total = pulseheights_list[p][:,i] # select for this time interval the data of plate i
+                    p_plate_total = pulseheights_list[p][:, i] # select for this time interval the data of plate i
 
                     # this histogram is for finding pulseheight value corresponding to the MPV bin (the highest bin besides the first photon bin)
-                    hist = plt.hist(p_plate_total,150) # make a histogram from the pulseheights of plate i
+                    hist = plt.hist(p_plate_total, 150) # make a histogram from the pulseheights of plate i
 
                     binsize = hist[0] # array with the number of pulseheights in each bin
                     value = hist[1] # array with the pulseheight value corresponding to the left side of each bin.
@@ -109,7 +108,7 @@ def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates)
                     skip = False
                     for h in range(len(binsize)):
                         try:
-                            if h > photon_bin and binsize[h+1] > binsize[h]:    # the bin that is more to the right than the photon bin and if the histogram is rising again.
+                            if h > photon_bin and binsize[h + 1] > binsize[h]:    # the bin that is more to the right than the photon bin and if the histogram is rising again.
                                 lowest_bin = h
                                 break   # if the lowest bin is found stop searching
                         except IndexError:
@@ -135,9 +134,9 @@ def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates)
                         # calculate pulseheight value of the centre of the MPV-bin.
                         for j in range(len(binsize)):
                             if binsize[j] == MPV_bin:
-                                MPV_value = (value[j] - value[j-1])/2 + value[j]
+                                MPV_value = (value[j] - value[j - 1]) / 2 + value[j]
 
-                        interval = [100,80,60,40,30]   # we fit the data in the range (MPV_value - interval[i], MPV_value + interval[i])
+                        interval = [100, 80, 60, 40, 30]   # we fit the data in the range (MPV_value - interval[i], MPV_value + interval[i])
 
                         fit_values_list = []
                         success = False
@@ -154,7 +153,7 @@ def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates)
                             #print values
                             bins = plo[1]
                             del plo
-                            bin_centers = (bins[:-1] + bins[1:])/2
+                            bin_centers = (bins[:-1] + bins[1:]) / 2
 
                             # bins = [0,500,1000,1500] i.e. the x-value for the LEFT side of each bin
                             # bins[:-1] = [0  ,500 ,1000]
@@ -168,7 +167,7 @@ def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates)
                             plt.clf()
 
                             try:
-                                popt, pcov = curve_fit(func, bin_centers, values,[1,MPV_value,1])
+                                popt, pcov = curve_fit(func, bin_centers, values, [1, MPV_value, 1])
                                 del pcov
                                 a = popt[0]
                                 b = popt[1]
@@ -193,7 +192,7 @@ def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates)
                             """
 
                             print ''
-                            afw = "Afwijking  = %g" % fit_values_list[0][0]
+                            afw = "Deviation  = %g" % fit_values_list[0][0]
                             print afw
                             ap = "a = %g" % fit_values_list[0][1]
                             print ap
@@ -207,13 +206,13 @@ def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates)
 
                             if show_plot:
 
-                                hist = plt.hist(p_plate_total,150)
+                                hist = plt.hist(p_plate_total, 150)
                                 plt.yscale('log')
                                 plt.axvline(fit_values_list[0][2])
                                 print 'Close plot to continue...'
                                 print ''
                                 plt.show()
-                            print 'MPV value = %.2f %s ' % (fit_values_list[0][2],units[plot_variable[0][0]])
+                            print 'MPV value = %.2f %s ' % (fit_values_list[0][2], units[plot_variable[0][0]])
                             print ''
                             success = False
 
@@ -224,11 +223,11 @@ def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates)
                             print ''
 
                             print ''
-                            print 'MPV value = %.2f %s ' % (MPV_value,units[plot_variable[0][0]])
+                            print 'MPV value = %.2f %s ' % (MPV_value, units[plot_variable[0][0]])
                             print ''
 
                             if show_plot:
-                                hist = plt.hist(p_plate_total,150)
+                                hist = plt.hist(p_plate_total, 150)
                                 plt.yscale('log')
                                 plt.axvline(MPV_value)
                                 print ''
@@ -247,4 +246,4 @@ def find_MPV_pulseheights(pulseheights_list,plot_variable,time,number_of_plates)
     except ValueError:
         print 'Error'
 
-    return MPV_list, number_of_plates,timing
+    return MPV_list, number_of_plates, timing
