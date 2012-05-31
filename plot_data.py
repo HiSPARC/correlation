@@ -5,23 +5,47 @@ from query_yes_no import query_yes_no
 from question_is_digit import question_is_digit
 from scipy import array
 from split_data_file_in_parts import split_data_file_in_parts
-from find_MPV_pulseheights2 import find_MPV_pulseheights
+from find_MPV_pulseheights import find_MPV_pulseheights
 from find_MPV_integrals import find_MPV_integrals
 from create_correlation_table import create_correlation_table
 
-units = dict(event_id = '' , timestamp = 'seconds', temp_inside = 'degrees Celcius', temp_outside = 'degrees Celcius', humidity_inside = '%', humidity_outside = '%', barometer = 'hectoPascal', wind_dir = 'degrees', wind_speed = 'm/s', solar_rad = 'Watt/m^2', uv = '', evapotranspiration = 'millimetre', rain_rate = 'millimetre/hour', heat_index = 'degrees Celcius', dew_point = 'degrees Celcius', wind_chill = 'degrees Celcius', nanoseconds = 'nanoseconds', ext_timestamp = 'nanoseconds', data_reduction = '', trigger_pattern = '', baseline = 'ADC counts', std_dev = 'ADC counts', n_peaks = '', pulseheights = 'ADC counts', integrals = 'ADC counts nanonseconds', traces = '', event_rate = 'Hz')
+units = dict(event_id = '' ,
+             timestamp = 'seconds',
+             temp_inside = 'degrees Celcius',
+             temp_outside = 'degrees Celcius',
+             humidity_inside = '%',
+             humidity_outside = '%',
+             barometer = 'hectoPascal',
+             wind_dir = 'degrees',
+             wind_speed = 'm/s',
+             solar_rad = 'Watt/m^2',
+             uv = '',
+             evapotranspiration = 'millimetre',
+             rain_rate = 'millimetre/hour',
+             heat_index = 'degrees Celcius',
+             dew_point = 'degrees Celcius',
+             wind_chill = 'degrees Celcius',
+             nanoseconds = 'nanoseconds',
+             ext_timestamp = 'nanoseconds',
+             data_reduction = '',
+             trigger_pattern = '',
+             baseline = 'ADC counts',
+             std_dev = 'ADC counts',
+             n_peaks = '',
+             pulseheights = 'ADC counts',
+             integrals = 'ADC counts nanonseconds',
+             traces = '',
+             event_rate = 'Hz')
 
 def plot(x,y):
     plt.plot(x,y)
-    # xticks
-    """
-    locs,labels = plt.xticks()
-    plt.xticks(locs, map(lambda x: "%g" % x, locs))
 
-    # ytikcs
-    locs,labels = plt.yticks()
-    plt.yticks(locs, map(lambda x: "%g" % x, locs))
-    """
+#     locs,labels = plt.xticks()
+#     plt.xticks(locs, map(lambda x: "%g" % x, locs))
+#
+#     locs,labels = plt.yticks()
+#     plt.yticks(locs, map(lambda x: "%g" % x, locs))
+
     plt.grid(True)
     plt.show()
 
@@ -29,7 +53,7 @@ def plot_data(plot_variable):
 
     MPV = False
 
-    if plot_variable[0][0] == 'pulseheights' or plot_variable[0][0] == 'integrals':
+    if plot_variable[0][0] in ('pulseheights', 'integrals'):
         print ''
         MPV = query_yes_no('Do you want to PLOT the MPV value of the %s? ' % plot_variable[0][0])
         if MPV == True:
@@ -49,20 +73,19 @@ def plot_data(plot_variable):
                 times_dates = [datetime.fromtimestamp(x) for x in timing]
                 time_interval_array = array(times_dates)
 
-
                 plot_variable1 = [('pulseheights', plot_variable[0][1], plot_variable[0][2], 'events')]
                 plot_variable2 = [('time', plot_variable[0][1], plot_variable[0][2], 'events')]
-                values1 = MPV_list
 
+                values1 = MPV_list
                 values2 = time
 
                 #values1 = [[223.06891567, 225.14306157, 251.37563667, 232.49152614], [ 222.83678403, 230.11266675, 252.46212176, 240.34877713], [ 221.93477928, 220.55830496, 252.18763693, 240.20223774], [ 221.6312732,  220.12749912, 251.39484828, 239.72122819], [ 220.85181864, 219.55821876, 245.45944561, 238.99690943], [ 220.78591021, 217.19816959, 242.16822914, 229.78131259], [ 221.1946917,  217.67203598, 241.777909,   229.3671103 ],[ 220.74065915, 247.9401853,  241.41402889, 228.91195226], [ 220.87410269, 254.73319246, 241.74092198, 228.8921862 ], [ 220.55980287, 222.65687533, 241.62508524, 228.94540398]]
                 #values2 = [1022.01842664,1017.68443154,1015.94049896,1016.51496527,1012.48148295,1006.521563, 1006.6486162, 1007.52539461,1011.76778161,1017.13496572]
 
-                filename = create_correlation_table(plot_variable1,plot_variable2, values1, values2,seconds)
+                filename = create_correlation_table(plot_variable1, plot_variable2, values1, values2, seconds)
 
             elif plot_variable[0][0] == 'integrals':
-                MPV_list, number_of_plates = find_MPV_integrals(variable_parts,plot_variable)
+                MPV_list, number_of_plates = find_MPV_integrals(variable_parts, plot_variable)
             else:
                 print 'problem'
 
@@ -126,7 +149,7 @@ def plot_data(plot_variable):
                     plate3.extend(list(variable[:, 2]))
                     plate4.extend(list(variable[:, 3]))
                 else:
-                    print 'problem'
+                    print 'problem with number of plates'
 
             if number_of_plates == 2:
                 dat_sorted1 = array(sorted(zip(time_list, plate1)))
@@ -137,7 +160,7 @@ def plot_data(plot_variable):
                 dat_sorted3 = array(sorted(zip(time_list, plate3)))
                 dat_sorted4 = array(sorted(zip(time_list, plate4)))
             else:
-                print 'problem'
+                print 'problem with number of plates'
             print ''
             print 'Your file(s) contain(s) data from ' + str(datetime.fromtimestamp(dat_sorted1[0][0])) + ' until ' + str(datetime.fromtimestamp(dat_sorted1[-1][0]))
             print ''
@@ -249,23 +272,20 @@ def plot_data(plot_variable):
                     again = query_yes_no('Do you want to plot again with different values for the UPPER and LOWER time?')
                     if again != True:
                         break
-
     else:
         timing = 0
-        pass
-    if plot_variable[0][0] != 'pulseheights' and plot_variable[0][0] != 'integrals':
+
+    if plot_variable[0][0] not in ('pulseheights', 'integrals'):
         variable_list = []
         time_list = []
 
         for i in range(len(plot_variable)):
-            data = tables.openFile(plot_variable[i][1], 'r')
+            with tables.openFile(plot_variable[i][1], 'r') as data:
+                tree_variable = "data.root.s%s.%s.col('%s')" % (plot_variable[i][2], plot_variable[i][3], plot_variable[i][0])
+                variable = eval(tree_variable)
 
-            tree_variable = 'data.root.s' + plot_variable[i][2] + '.' + plot_variable[i][3] + "[:]['" + plot_variable[i][0] + "']"
-            variable = eval(tree_variable)
-
-            tree_time = 'data.root.s' + plot_variable[i][2] + '.' + plot_variable[i][3] + "[:]['timestamp']"
-            time = eval(tree_time)
-            data.close()
+                tree_time = "data.root.s%s.%s.col('timestamp')" % (plot_variable[i][2], plot_variable[i][3])
+                time = eval(tree_time)
 
             time_list.extend(time)
             variable_list.extend(variable)
@@ -273,7 +293,7 @@ def plot_data(plot_variable):
         dat_sorted = sorted(zip(time_list, variable_list))
 
         print ''
-        print 'Your file(s) contain(s) data from ' + str(datetime.fromtimestamp(dat_sorted[0][0])) + ' until ' + str(datetime.fromtimestamp(dat_sorted[-1][0]))
+        print 'Your file(s) contain(s) data from %s until %s' % (str(datetime.fromtimestamp(dat_sorted[0][0])), str(datetime.fromtimestamp(dat_sorted[-1][0])))
         print ''
         whole = query_yes_no('Do you want to PLOT this whole time interval')
 
