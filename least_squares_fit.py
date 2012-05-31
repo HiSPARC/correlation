@@ -35,19 +35,18 @@ def lose_nans(x,y):
 def get_date_interval_from_file_names(var1, var2):
     first_file = var1[0][1]
     station_ID = var1[0][2]
-    # ADL: I may have broken this, I changed the separator betweens start stop to '_'
     inter_string1a = first_file.partition(station_ID + '_')
-    inter_string1b = inter_string1a[2].partition(' - ')
+    inter_string1b = inter_string1a[2].partition('_')
     start_date_interval = inter_string1b[0]
 
     second_file = var1[-1][1]
     inter_string2a = second_file.partition(station_ID + '_')
-    inter_string2b = inter_string2a[2].partition(' - ')
+    inter_string2b = inter_string2a[2].partition('_')
     stop_date_interval = inter_string2b[2].replace('.h5', '')
 
     return start_date_interval, stop_date_interval
 
-def least_squares_fit(filename, variable1,variable2):
+def least_squares_fit(filename, variable1, variable2):
 
     units = dict(event_id = '' ,
                  timestamp = 'seconds',
@@ -79,10 +78,10 @@ def least_squares_fit(filename, variable1,variable2):
 
     with tables.openFile(filename, 'r') as data:
         # fetch values variable 1 and 2
-        variable_1 = data.root.correlation.table[:]['variable1']
-        variable_2 = data.root.correlation.table[:]['variable2']
+        variable_1 = data.root.correlation.table.col('variable1')
+        variable_2 = data.root.correlation.table.col('variable2')
 
-    y_axis = query_yes_no("Do you want to plot '" + variable1[0][0] + "' on the y-axis?")
+    y_axis = query_yes_no("Do you want to plot %s on the y-axis?" % variable1[0][0])
 
     if len(variable_1.shape) != 1:
         print 'There are %d plates with an individual %s value.' % (variable_1.shape[1], variable1[0][0])
@@ -120,41 +119,41 @@ def least_squares_fit(filename, variable1,variable2):
 
     if y_axis == True:
         print ''
-        print "The equation for the linear fit line is: ( y = ax + b )   y = " + str(a) + " * x" + " + " + str(b)
+        print "The equation for the linear fit line is: ( y = a * x + b )   y = " + str(a) + " * x + " + str(b)
         print ''
-        print "or     '" + variable1[0][0] + "' = " + str(a) + " * '" + variable2[0][0] + "'" + " + " + str(b)
+        print "or     '" + variable1[0][0] + "' = " + str(a) + " * '" + variable2[0][0] + "' + " + str(b)
     elif y_axis == False:
         print ''
-        print "The equation for the linear fit line is: ( y = ax + b )   y = " + str(a) + " * x" + " + " + str(b)
+        print "The equation for the linear fit line is: ( y = a * x + b )   y = " + str(a) + " * x + " + str(b)
         print ''
-        print "or     '" + variable2[0][0] + "' = " + str(a) + " * '" + variable1[0][0] + "'" + " + " + str(b)
+        print "or     '" + variable2[0][0] + "' = " + str(a) + " * '" + variable1[0][0] + "' + " + str(b)
 
     # Calculate sample pearson correlation coefficient
-    cor_coef = np.corrcoef([x,y])[0,1]
+    cor_coef = np.corrcoef([x, y])[0, 1]
 
     absolute_cor_coef = abs(cor_coef)
     print ''
-    pearson_text = "The Pearson correlation coefficient between '" + variable1[0][0] + "' and '" + variable2[0][0] + "' is : " + str(cor_coef)
+    pearson_text = "The Pearson correlation coefficient between '%s' and '%s' is: %s" % (variable1[0][0], variable2[0][0], str(cor_coef))
     print pearson_text
     print ''
 
-    if absolute_cor_coef >= 0 and absolute_cor_coef < 0.1:
-        correlation = 'NO '
-    elif absolute_cor_coef >= 0.1 and absolute_cor_coef < 0.3:
-        correlation = 'a SMALL '
-    elif absolute_cor_coef >= 0.3 and absolute_cor_coef < 0.5:
-        correlation = 'a MEDIUM '
-    elif absolute_cor_coef >= 0.5 and absolute_cor_coef <= 1:
-        correlation = 'a STRONG '
+    if absolute_cor_coef < 0.1:
+        correlation = 'NO'
+    elif 0.1 <= absolute_cor_coef <= 0.3:
+        correlation = 'a SMALL'
+    elif 0.3 <= absolute_cor_coef <= 0.5:
+        correlation = 'a MEDIUM'
+    elif 0.5 <= absolute_cor_coef <= 1:
+        correlation = 'a STRONG'
 
-    if cor_coef > 0: #and correlation != 'NO ':
+    if cor_coef >= 0.1:
         pos_neg = 'POSITIVE'
-    elif cor_coef < 0: #and correlation != 'NO ':
+    elif cor_coef <= -0.1:
         pos_neg = 'NEGATIVE'
-    elif cor_coef == 0:
+    else:
         pos_neg = ''
 
-    conclusion = "For this sample you have found " + correlation + pos_neg + " correlation between '" + variable1[0][0] + "' and '" + variable2[0][0] + " ."
+    conclusion = "For this sample you have found %s %s correlation between '%s' and '%s'." % (correlation, pos_neg, variable1[0][0], variable2[0][0])
     print conclusion
 
     """
@@ -210,14 +209,14 @@ def least_squares_fit(filename, variable1,variable2):
         plt.ylabel(variable2[0][0] + ' (' + units[variable2[0][0]] + ')')
         plt.xlabel(variable1[0][0] + ' (' + units[variable1[0][0]] + ')')
 
-    tit = "Fit line: ( y = ax + b )   y = " + str(a) + " * x" + " + " + str(b)
+    tit = "Fit line: ( y = ax + b )   y = " + str(a) + " * x + " + str(b)
 
     plt.legend()
     plt.title(tit)
 
-    start_date_interval, stop_date_interval  = get_date_interval_from_file_names(variable1, variable2)
+    start_date_interval, stop_date_interval = get_date_interval_from_file_names(variable1, variable2)
     inter_filename = filename.replace('.h5', '')
-    fname = inter_filename + ' ' + start_date_interval + ' - ' + stop_date_interval
+    fname = inter_filename + ' ' + start_date_interval + '_' + stop_date_interval
 
     plt.savefig(fname + ".png")
     plt.show()

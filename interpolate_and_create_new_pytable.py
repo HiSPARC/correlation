@@ -60,7 +60,7 @@ def interpolate(var1,var2):
     start_date = intermediate2[0]
     intermediate3 = intermediate2[2][1:]
     end_date = intermediate3.replace('.h5','')
-    filenom = 'interpolated_table_' + str(var1[0][0]) + '_station' + str(var1[0][2]) + '_with_' + str(var2[0][0]) + '_station' + str(var2[0][2]) + '_' + start_date + ' - ' + end_date + '.h5'
+    filenom = 'interpolated_table_' + str(var1[0][0]) + '_station' + str(var1[0][2]) + '_with_' + str(var2[0][0]) + '_station' + str(var2[0][2]) + '_' + start_date + '_' + end_date + '.h5'
 
     """
     intermediate1 = var1[0][1].replace('data_s' + str(var1[0][2]) + '_', '')
@@ -86,8 +86,8 @@ def interpolate(var1,var2):
         data_var1 = openFile(str(var1[i][1]), 'r')
         # fetch timestamps and variable 1 from station 1
 
-        timestamps_station1 = eval('data_var1.root.s' + str(var1[i][2]) + '.' + str(var1[i][3]) + '[:]' + "['timestamp']")
-        var1_station1 = eval('data_var1.root.s' + str(var1[i][2]) + '.' + str(var1[i][3]) + '[:]' + "['" + str(var1[i][0]) + "']")
+        timestamps_station1 = eval("data_var1.root.s%s.%s.col('timestamp')" % (str(var1[i][2]) , str(var1[i][3])))
+        var1_station1 = eval("data_var1.root.s%s.%s.col('%s')" % (str(var1[i][2]), str(var1[i][3]), str(var1[i][0])))
         data_var1.close()
         if len(var1_station1.shape) != 1:
             print 'There are %d plates with an individual %s value.' % (var1_station1.shape[1], str(var1[i][0]))
@@ -126,9 +126,8 @@ def interpolate(var1,var2):
         # open data file 2
         data_var2 = openFile(str(var2[i][1]), 'r')
         #fetch timestamps and variable2 from station 2
-        timestamps_station2 = eval('data_var2.root.s' + str(var2[i][2]) + '.' + str(var2[i][3]) + '[:]' + "['timestamp']")
-
-        var2_station2 = eval('data_var2.root.s' + str(var2[i][2]) + '.' + str(var2[i][3]) + '[:]' + "['" + str(var2[i][0]) + "']")
+        timestamps_station2 = eval("data_var2.root.s%s.%s.col('timestamp')" % (str(var2[i][2]), str(var2[i][3])))
+        var2_station2 = eval("data_var2.root.s%s.%s.col('%s')" % (str(var2[i][2]), str(var2[i][3]), str(var2[i][0])))
         data_var2.close()
 
         if len(var2_station2.shape) != 1:

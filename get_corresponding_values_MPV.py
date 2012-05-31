@@ -45,11 +45,11 @@ def get_corresponding_values_MPV(plot_variable2,times):
         data = tables.openFile(plot_variable2[i][1], 'r')
 
         # get variable values from data file
-        var_string = 'data.root.s' +  plot_variable2[i][2]+ '.' + plot_variable2[i][3] + "[:]['" + plot_variable2[i][0] + "']"
+        var_string = "data.root.s%s.%s.col('%s')" % (plot_variable2[i][2], plot_variable2[i][3], plot_variable2[i][0])
         var = eval(var_string)
 
         # get timestamp values corresponding to the variable values from datafile
-        ts_string = 'data.root.s' +  plot_variable2[i][2]+ '.' + plot_variable2[i][3] + "[:]['timestamp']"
+        ts_string = "data.root.s%s.%s.col('timestamp')" % (plot_variable2[i][2], plot_variable2[i][3])
         ts = eval(ts_string)
 
         data.close()

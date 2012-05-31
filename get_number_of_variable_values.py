@@ -1,11 +1,11 @@
 
 def get_number_of_variable_values(var_data):
     if len(var_data.shape) != 1:
-        p1 = var_data[:,0]
+        p1 = var_data[:, 0]
         print p1
-        p2 = var_data[:,1]
-        p3 = var_data[:,2]
-        p4 = var_data[:,3]
+        p2 = var_data[:, 1]
+        p3 = var_data[:, 2]
+        p4 = var_data[:, 3]
         del var_data
 
         plate_list = []
@@ -27,17 +27,15 @@ def get_number_of_variable_values(var_data):
 
 if __name__=="__main__":
     import tables
-    data = tables.openFile('data_s502_2011,6,1 - 2011,7,1.h5','r')
-    colnames_events = data.root.s502.events.colnames
+    with tables.openFile('data_s502_2011,6,1 - 2011,7,1.h5','r') as data
+        colnames_events = data.root.s502.events.colnames
 
-    for colname in colnames_events:
-        print colname
-        string = "data.root.s502.events[:]" + "['" + colname + "']"
-        var_data = eval(string)
+        for colname in colnames_events:
+            var_string = "data.root.s502.events.col('%s')" % colname
+            var = eval(var_string)
 
-        number_of_plates = get_number_of_variable_values(var_data)
-        print number_of_plates
-    data.close()
+            number_of_plates = get_number_of_variable_values(var)
+            print colname, number_of_plates
 
 
 """
@@ -53,7 +51,3 @@ p1,p2,p3,p4 = zip(*var_data)
 print sorted(p3)[-1]
 print sorted(p4)[-1]
 """
-
-
-
-

@@ -37,12 +37,11 @@ units = dict(event_id = '' ,
              traces = '',
              event_rate = 'Hz')
 
-def plot(x,y):
-    plt.plot(x,y)
+def plot(x, y):
+    plt.plot(x, y)
 
 #     locs,labels = plt.xticks()
 #     plt.xticks(locs, map(lambda x: "%g" % x, locs))
-#
 #     locs,labels = plt.yticks()
 #     plt.yticks(locs, map(lambda x: "%g" % x, locs))
 
@@ -98,11 +97,11 @@ def plot_data(plot_variable):
             plt.ylabel('%s (%s)' % (plot_variable[0][0], units[plot_variable[0][0]]))
 
             # create filename for correlation table from data filenames
-            intermediate1 = plot_variable[0][1].replace('data_s' + str(plot_variable[0][2]) + '_', '')
+            intermediate1 = plot_variable[0][1].replace('data_s%s_' % str(plot_variable[0][2]), '')
             intermediate2 = intermediate1.partition('_')
             start_date = intermediate2[0]
 
-            intermediate1b = plot_variable[-1][1].replace('data_s' + str(plot_variable[-1][2]) + '_', '')
+            intermediate1b = plot_variable[-1][1].replace('data_s%s_' % str(plot_variable[-1][2]), '')
             intermediate2b = intermediate1b.partition('_')
             intermediate3b = intermediate2b[2][1:]
             end_date = intermediate3b.replace('.h5','')
@@ -161,6 +160,7 @@ def plot_data(plot_variable):
                 dat_sorted4 = array(sorted(zip(time_list, plate4)))
             else:
                 print 'problem with number of plates'
+
             print ''
             print 'Your file(s) contain(s) data from ' + str(datetime.fromtimestamp(dat_sorted1[0][0])) + ' until ' + str(datetime.fromtimestamp(dat_sorted1[-1][0]))
             print ''
@@ -219,41 +219,17 @@ def plot_data(plot_variable):
                             print "Oops! Your lower time limit equals your upper time limit. Try again."
                         if dat_sorted1[0][0] + x_lim_up > dat_sorted1[-1][0]:
                             print "Oops! Your upper time limit lies beyond your data set. Try again."
-                    plot_list1 = []
-                    plot_list2 = []
-                    plot_list3 = []
-                    plot_list4 = []
 
-                    for t, v in dat_sorted1:
-                        if t > dat_sorted1[0][0] +  x_lim_low and t < dat_sorted1[0][0] + x_lim_up:
-                             plot_list1.append([t, v])
-
-                    plot_list1 = array(plot_list1)
-
-                    for t, v in dat_sorted2:
-                        if t > dat_sorted2[0][0] +  x_lim_low and t < dat_sorted2[0][0] + x_lim_up:
-                             plot_list2.append([t, v])
-
-                    plot_list2 = array(plot_list2)
-
-                    if number_of_plates == 2:
-                        values = array(zip(plot_list1[:, 1], plot_list2[:, 1]))
+                    plot_list1 = array([[t, v] for t, v in dat_sorted1 if dat_sorted1[0][0] + x_lim_low < t < dat_sorted1[0][0] + x_lim_up])
+                    plot_list2 = array([[t, v] for t, v in dat_sorted2 if dat_sorted2[0][0] + x_lim_low < t < dat_sorted2[0][0] + x_lim_up])
 
                     if number_of_plates == 4:
-                        for t, v in dat_sorted3:
-                            if t > dat_sorted3[0][0] +  x_lim_low and t < dat_sorted3[0][0] + x_lim_up:
-                                 plot_list3.append([t, v])
-
-                        plot_list3 = array(plot_list3)
-
-                        for t, v in dat_sorted4:
-                            if t > dat_sorted4[0][0] +  x_lim_low and t < dat_sorted4[0][0] + x_lim_up:
-                                 plot_list4.append([t, v])
-
-                        plot_list4 = array(plot_list4)
-
+                        plot_list3 = array([[t, v] for t, v in dat_sorted3 if dat_sorted3[0][0] + x_lim_low < t < dat_sorted3[0][0] + x_lim_up])
+                        plot_list4 = array([[t, v] for t, v in dat_sorted4 if dat_sorted4[0][0] + x_lim_low < t < dat_sorted4[0][0] + x_lim_up])
                         values = array(zip(plot_list1[:, 1], plot_list2[:, 1],
                                            plot_list3[:, 1], plot_list4[:, 1]))
+                    elif number_of_plates == 2:
+                        values = array(zip(plot_list1[:, 1], plot_list2[:, 1]))
 
                     times = plot_list1[:, 0]
                     x = [datetime.fromtimestamp(i) for i in times]
@@ -342,8 +318,8 @@ def plot_data(plot_variable):
                 plot_list = []
                 # e.g. dat_sorted = (timestamp, variable)
 
-                for t,v in dat_sorted:
-                    if t > dat_sorted[0][0] +  x_lim_low and t < dat_sorted[0][0] + x_lim_up:
+                for t, v in dat_sorted:
+                    if t > dat_sorted[0][0] + x_lim_low and t < dat_sorted[0][0] + x_lim_up:
                          plot_list.append([t, v])
 
                 plot_list = array(plot_list)
