@@ -27,7 +27,7 @@ def get_number_of_variable_values(var_data):
 
 if __name__=="__main__":
     import tables
-    with tables.openFile('data_s502_2011,6,1 - 2011,7,1.h5','r') as data
+    with tables.openFile('data_s502_2011,6,1 - 2011,7,1.h5','r') as data:
         colnames_events = data.root.s502.events.colnames
 
         for colname in colnames_events:
