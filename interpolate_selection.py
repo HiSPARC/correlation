@@ -54,34 +54,24 @@ def interpolate_selection(var1, var2):
 
             variable1 = var1[:, 1]
             variable2 = result
-            del result, x, xp, fp
-
-            for i in range(len(variable1)):
-                particle['variable1'] = variable1[i]
-                particle['variable2'] = variable2[i]
-                particle.append()
-            del variable1, variable2
-            table_variable1.flush()
-
+            end_length = length_var1
 
         elif length_var1 < length_var2:
-            x = var2[:,0]
-            xp = var1[:,0]
-            fp = var1[:,1]
-
+            x = var2[:, 0]
+            xp = var1[:, 0]
+            fp = var1[:, 1]
             result = np.interp(x, xp, fp)
 
             variable1 = result
-            variable2 = var2[:,1]
-            del result, x, xp, fp
+            variable2 = var2[:, 1]
+            end_length = length_var2
 
-            for i in range(len(var2)):
-                particle['variable1'] = variable1[i]
-                particle['variable2'] = variable2[i]
-                particle.append()
-            del variable1, variable2
-            table_variable1.flush()
+        for i in range(end_length):
+            particle['variable1'] = variable1[i]
+            particle['variable2'] = variable2[i]
+            particle.append()
 
+        table_variable1.flush()
 
     else:
         print ''
@@ -110,3 +100,4 @@ var2 = [('barometer', 'data_s501_2011,5,23 - 2011,5,31.h5', '501', 'weather'), (
 #var2 = [('barometer', 'data_s501_2011,7,1 - 2011,7,10.h5', '501', 'weather')]
 
 interpolate(var1,var2)
+"""
