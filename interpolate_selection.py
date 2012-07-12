@@ -6,7 +6,7 @@ import numpy as np
 # var1 = array([0.78,0.75,0.80])
 # var2 = array([1009,1010,1010])
 
-def interpolate_selection(var1,var2):
+def interpolate_selection(var1, var2):
 
     print ''
     print 'Interpolating and creating new table...'
@@ -24,13 +24,16 @@ def interpolate_selection(var1,var2):
     intermediate2 = var1[-1][1].replace('data_', '')
     station_id_and_date_interval2 = intermediate2.replace('.h5', '')
 
-    filenom = 'cor_' + str(var1[0][0]) + '_' + str(var1[0][2]) + '_' + str(var2[0][0]) + '_' + str(var2[0][2]) + '_' + station_id_and_date_interval1 + '_' + station_id_and_date_interval2 + '.h5'
+    filename = ('cor_' + str(var1[0][0]) + '_' + str(var1[0][2]) + '_' +
+               str(var2[0][0]) + '_' + str(var2[0][2]) + '_' +
+               station_id_and_date_interval1 + '_' +
+               station_id_and_date_interval2 + '.h5')
     """
 
-    filenom = 'cor_test.h5'
+    filename = 'cor_test.h5'
 
     # make new table
-    data_cor = openFile(filenom, 'w')
+    data_cor = openFile(filename, 'w')
     group_variable1 = data_cor.createGroup("/", 'correlation')
     table_variable1 = data_cor.createTable(group_variable1, 'table', Variable1)
 
@@ -38,20 +41,18 @@ def interpolate_selection(var1,var2):
     particle = table_variable1.row
 
     length_var1 = len(var1)
-
     length_var2 = len(var2)
 
     if length_var1 != length_var2:
 
         # Apply linear interpolation
-        if length_var1 > length_var2 :
-            x = var1[:,0]
-            xp = var2[:,0]
-            fp = var2[:,1]
-
+        if length_var1 > length_var2:
+            x = var1[:, 0]
+            xp = var2[:, 0]
+            fp = var2[:, 1]
             result = np.interp(x, xp, fp)
 
-            variable1 = var1[:,1]
+            variable1 = var1[:, 1]
             variable2 = result
             del result, x, xp, fp
 
@@ -91,7 +92,7 @@ def interpolate_selection(var1,var2):
     data_cor.close()
     print 'Done'
 
-    return filenom
+    return filename
 
 
 """
@@ -109,4 +110,3 @@ var2 = [('barometer', 'data_s501_2011,5,23 - 2011,5,31.h5', '501', 'weather'), (
 #var2 = [('barometer', 'data_s501_2011,7,1 - 2011,7,10.h5', '501', 'weather')]
 
 interpolate(var1,var2)
-"""

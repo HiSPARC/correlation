@@ -4,7 +4,7 @@ import numpy as np
 from get_number_of_plates import get_number_of_plates
 
 
-def create_correlation_table(plot_variable1,plot_variable2, values1, values2,seconds):
+def create_correlation_table(plot_variable1, plot_variable2, values1, values2, seconds):
 
     if len(values2) == len(values1):
         print ''
@@ -14,24 +14,23 @@ def create_correlation_table(plot_variable1,plot_variable2, values1, values2,sec
         number_of_plates1 = 0
         number_of_plates2 = 0
 
-        if plot_variable1[0][0] == 'pulseheights' or plot_variable1[0][0] == 'integrals' or plot_variable2[0][0] == 'pulseheights' or plot_variable2[0][0] == 'integrals':
-            if plot_variable1[0][0] == 'pulseheights' or plot_variable1[0][0] == 'integrals':
-                number_of_plates1 = get_number_of_plates(values1[0])
-            if plot_variable2[0][0] == 'pulseheights' or plot_variable2[0][0] == 'integrals':
-                number_of_plates2 = get_number_of_plates(values2[0])
+        if plot_variable1[0][0] in ('pulseheights', 'integrals'):
+            number_of_plates1 = get_number_of_plates(values1[0])
+        if plot_variable2[0][0] in ('pulseheights', 'integrals'):
+            number_of_plates2 = get_number_of_plates(values2[0])
 
         # declare a class
         class Variable1(IsDescription):
-            if number_of_plates1 in range(1,5) and number_of_plates2 in range(1,5):
+            if number_of_plates1 in range(1, 5) and number_of_plates2 in range(1, 5):
                 variable1 = Float64Col(shape=(number_of_plates1,))
                 variable2 = Float64Col(shape=[number_of_plates2,])
-            elif number_of_plates1 in range(1,5) and number_of_plates2 not in range(1,5):
+            elif number_of_plates1 in range(1, 5) and number_of_plates2 not in range(1, 5):
                 variable1 = Float64Col(shape=(number_of_plates1,))
                 variable2 = Float64Col()
-            elif number_of_plates1 not in range(1,5) and number_of_plates2 in range(1,5):
+            elif number_of_plates1 not in range(1, 5) and number_of_plates2 in range(1, 5):
                 variable1 = Float64Col()
                 variable2 = Float64Col(shape=(number_of_plates2,))
-            elif number_of_plates1 not in range(1,5) and number_of_plates2 not in range(1,5):
+            elif number_of_plates1 not in range(1, 5) and number_of_plates2 not in range(1, 5):
                 variable1 = Float64Col()
                 variable2 = Float64Col()
             else:
@@ -39,13 +38,15 @@ def create_correlation_table(plot_variable1,plot_variable2, values1, values2,sec
 
 
         # create filename for correlation table from data filenames
-        intermediate1 = plot_variable1[0][1].replace('data_s' + str(plot_variable1[0][2]) + '_', '')
-        intermediate2 = intermediate1.partition(' -')
+        intermediate1 = plot_variable1[0][1].replace('data_s%d_' % plot_variable1[0][2], '')
+        intermediate2 = intermediate1.partition('_')
         start_date = intermediate2[0]
         intermediate3 = intermediate2[2][1:]
         end_date = intermediate3.replace('.h5','')
 
-        filename = 'interpolated_table_' + str(plot_variable1[0][0]) + '_station' + str(plot_variable1[0][2]) + '_with_' + str(plot_variable2[0][0]) + '_station' + str(plot_variable2[0][2]) + '_' + start_date + '_' + end_date + '_timeinterval_' + str(seconds) + '.h5'
+        filename = ('interpolated_table_%s_station%d_with__station%d_%s_%s'
+                    '_timeinterval_' + str(seconds) + '.h5') %
+                    (plot_variable1[0][0], plot_variable1[0][2], plot_variable2[0][0], plot_variable2[0][2], start_date, end_date)
 
         # make new table
         data_cor = openFile(filename, 'w')
@@ -56,7 +57,6 @@ def create_correlation_table(plot_variable1,plot_variable2, values1, values2,sec
         particle = table_variable1.row
 
         for i in range(len(values1)):
-
             particle['variable1'] = values1[i]
             particle['variable2'] = values2[i]
             particle.append()

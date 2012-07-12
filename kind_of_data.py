@@ -10,9 +10,7 @@ def kind_of_data(list_file_names):
     for i in list_file_names:
         user_hisparc_station_id = get_station_ID_from_filename(i)
         data = tables.openFile(i, 'r')
-        table =  'data.root.'
-        folder = 's' + user_hisparc_station_id
-        group = table + folder
+        group =  'data.root.s%s' % user_hisparc_station_id
 
         if 'events' in eval(group):
             muon_data_present_in_table.append(True)
@@ -24,10 +22,9 @@ def kind_of_data(list_file_names):
         else:
             weather_data_present_in_table.append(False)
 
-
         data.close()
 
-    kind_of_data_in_table = zip(list_file_names, muon_data_present_in_table,weather_data_present_in_table)
+    kind_of_data_in_table = zip(list_file_names, muon_data_present_in_table, weather_data_present_in_table)
 
     return kind_of_data_in_table
 

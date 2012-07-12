@@ -2,7 +2,7 @@ from scipy import array
 import tables
 from query_yes_no import query_yes_no
 
-def get_corresponding_values_MPV(plot_variable2,times):
+def get_corresponding_values_MPV(plot_variable2, times):
     low_limit = dict(temp_inside = -200,
                      temp_outside = -200,
                      humidity_inside = 0,
@@ -59,8 +59,8 @@ def get_corresponding_values_MPV(plot_variable2,times):
     if plot_variable2[0][0] in low_limit:
         bad_data2 = []
         for t2,v2 in data_sorted:
-            if v2 >= low_limit[plot_variable2[0][0]] and  v2 <= high_limit[plot_variable2[0][0]]:
-                var_list_without_bad_data2.append((t2,v2))
+            if v2 >= low_limit[plot_variable2[0][0]] and v2 <= high_limit[plot_variable2[0][0]]:
+                var_list_without_bad_data2.append((t2, v2))
             else:
                 bad_data2.append((t2,v2))
 
@@ -75,7 +75,7 @@ def get_corresponding_values_MPV(plot_variable2,times):
     else: # the plot module gives the center of every time interval. From this the begin- and end-timestamp for every time-interval is calculated
         # times[0] = 1000 s, times[1] = 2000 s, times[2] = 3000 s.
 
-        begin_end_timestamp_list = [times[0] - ((times[1] - times[0]) / 2) + i*(times[1] - times[0]) for i in range(len(times)+1)]
+        begin_end_timestamp_list = [times[0] - ((times[1] - times[0]) / 2) + i * (times[1] - times[0]) for i in range(len(times) + 1)]
         #                        = 1000      - (2000 - 1000)/2             + 0 * (2000 - 1000) = 1000 - 500 + 0 = 500 s
         #                        = 1000      - 500                         + 1 * 1000 = 1000 - 500 + 1000 = 1500 s
         #                        = 1000      - 500                         + 2 * 1000 = 1000 - 500 + 2000 = 2500 s
@@ -87,8 +87,8 @@ def get_corresponding_values_MPV(plot_variable2,times):
     for i in range(len(times)):
         mean_data_list_int = []
         for ts,var in var_list_without_bad_data2:
-            if ts > begin_end_timestamp_list[i] and ts < begin_end_timestamp_list[i+1]:
-                mean_data_list_int.append([ts,var])
+            if ts > begin_end_timestamp_list[i] and ts < begin_end_timestamp_list[i + 1]:
+                mean_data_list_int.append([ts, var])
 
         data_list_to_calculate_mean.append(array(mean_data_list_int))
     # for every time interval the mean of the variable is calculated
@@ -98,7 +98,7 @@ def get_corresponding_values_MPV(plot_variable2,times):
     for j in data_list_to_calculate_mean:
         if len(j.shape) == 2:
             if len(j[0]):
-                var_list = j[:,1]
+                var_list = j[:, 1]
                 mean = sum(var_list) / len(var_list)
                 mean_variable_list.append(mean)
             else:
