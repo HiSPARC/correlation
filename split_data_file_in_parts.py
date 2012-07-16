@@ -70,8 +70,7 @@ def split_data_file_in_parts(variable, seconds):
             list = var_data.tolist()
             del var_data
         else:
-            'weird!'
-            pass
+            print 'weird!'
 
         dat_sorted_part = sorted(zip(timestamps, list))
         dat_sorted.extend(dat_sorted_part)

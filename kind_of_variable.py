@@ -1,5 +1,7 @@
 import tables
+
 from question_is_digit_with_plate_constraint import question_is_digit_with_plate_constraint
+
 
 def kind_of_variable(file, station, variable):
 
@@ -26,8 +28,7 @@ def kind_of_variable(file, station, variable):
 
         return kind
     else:
-        'problem'
-        pass
+        print 'problem'
 
 """
 stations = [502,501]

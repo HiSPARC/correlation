@@ -1,6 +1,7 @@
 from select_variable import select_variable
 from kind_of_variable import kind_of_variable
 
+
 def choose_variables_for_correlation(kind_of_data_in_table, stations):
 
     variable1 = []
@@ -20,62 +21,62 @@ def choose_variables_for_correlation(kind_of_data_in_table, stations):
     filenames2 = []
     kinds2 = []
 
-
     kind = ''
 
     if len(stations) == 1:
         if not variable1:
             #'select var1 from station 1'
-            variable1 = select_variable(kind_of_data_in_table,stations[0])
+            variable1 = select_variable(kind_of_data_in_table, stations[0])
             #'create variable specifications for var1 from station 1'
             for i in kind_of_data_in_table:
-                kind = kind_of_variable(i,stations[0], variable1)
+                kind = kind_of_variable(i, stations[0], variable1)
                 variables1.append(variable1)
                 stationIDs1.append(stations[0])
                 filenames1.append(i[0])
                 kinds1.append(kind)
 
-            variable1_specs = zip(variables1,filenames1, stationIDs1,kinds1)
+            variable1_specs = zip(variables1, filenames1, stationIDs1, kinds1)
 
         if variable1:
             #'select var2 from station 1'
-            variable2 = select_variable(kind_of_data_in_table,stations[0])
+            variable2 = select_variable(kind_of_data_in_table, stations[0])
             #'create variable specifications for var2 from station 1'
             for i in kind_of_data_in_table:
-                kind = kind_of_variable(i,stations[0], variable2)
+                kind = kind_of_variable(i, stations[0], variable2)
                 variables2.append(variable2)
                 stationIDs2.append(stations[0])
                 filenames2.append(i[0])
                 kinds2.append(kind)
 
-            variable2_specs = zip(variables2,filenames2, stationIDs2,kinds2)
+            variable2_specs = zip(variables2, filenames2, stationIDs2, kinds2)
 
     if len(stations) == 2:
         if not variable1:
             #'select var1 from station 1'
-            variable1 = select_variable(kind_of_data_in_table,stations[0])
+            variable1 = select_variable(kind_of_data_in_table, stations[0])
             #'create variable specifications for var1 from station 1'
             for i in kind_of_data_in_table:
                 if str(stations[0]) in i[0]:
-                    kind = kind_of_variable(i,stations[0], variable1)
+                    kind = kind_of_variable(i, stations[0], variable1)
                     variables1.append(variable1)
                     stationIDs1.append(stations[0])
                     filenames1.append(i[0])
                     kinds1.append(kind)
 
-                    variable1_specs = zip(variables1,filenames1, stationIDs1,kinds1)
+                    variable1_specs = zip(variables1, filenames1, stationIDs1, kinds1)
+
         if variable1:
             #'select var2 from station 2'
-            variable2 = select_variable(kind_of_data_in_table,stations[1])
+            variable2 = select_variable(kind_of_data_in_table, stations[1])
             for i in kind_of_data_in_table:
                 if str(stations[1]) in i[0]:
-                    kind = kind_of_variable(i,stations[1], variable2)
+                    kind = kind_of_variable(i, stations[1], variable2)
                     variables2.append(variable2)
                     stationIDs2.append(stations[1])
                     filenames2.append(i[0])
                     kinds2.append(kind)
 
-                    variable2_specs = zip(variables2,filenames2, stationIDs2,kinds2)
+                    variable2_specs = zip(variables2, filenames2, stationIDs2, kinds2)
 
     return variable1_specs, variable2_specs
 

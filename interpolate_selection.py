@@ -1,4 +1,3 @@
-
 from tables import openFile, IsDescription, Float32Col
 from scipy import array
 import numpy as np
@@ -77,7 +76,6 @@ def interpolate_selection(var1, var2):
         print ''
         'No interpolation necessary'
         print ''
-        pass
 
     data_cor.close()
     print 'Done'

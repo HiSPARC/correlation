@@ -55,9 +55,7 @@ if download_question == True:
 
     list_file_names_station_1 = down_data_in_parts(user_hisparc_station_id_1, user_start_date_data_interval, user_stop_date_data_interval)
 
-    if list_file_names_station_1:
-        pass
-    else:
+    if not list_file_names_station_1:
         sys.exit()
 
     kind_of_data_in_table = kind_of_data(list_file_names_station_1)
@@ -75,22 +73,21 @@ if download_question == True:
         if same_dates == True:
             list_file_names_station_2 = down_data_in_parts(user_hisparc_station_id_2, user_start_date_data_interval, user_stop_date_data_interval)
 
-            if list_file_names_station_2:
-                pass
-            else:
+            if not list_file_names_station_2:
                 sys.exit()
+
             kind_of_data_in_station_2 = kind_of_data(list_file_names_station_2)
             kind_of_data_in_table.extend(kind_of_data_in_station_2)
             show_downloaded_file_names(kind_of_data_in_table)
+
         elif same_dates == False:
             user_start_date_data_interval = question_is_digit_and_date('Enter START date data interval as yyyy,mm,dd ( e.g. 2011,7,21 ) : ')
             user_stop_date_data_interval = question_is_digit_and_date('Enter STOP date data interval ( e.g. 2011,7,22 ) : ')
             list_file_names_station_2 = down_data_in_parts(user_hisparc_station_id_2, user_start_date_data_interval, user_stop_date_data_interval)
 
-            if list_file_names_station_2:
-                pass
-            else:
+            if not list_file_names_station_2:
                 sys.exit()
+
             kind_of_data_in_station_2 = kind_of_data(list_file_names_station_2)
             kind_of_data_in_table.extend(kind_of_data_in_station_2)
             show_downloaded_file_names(kind_of_data_in_table)

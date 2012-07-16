@@ -1,14 +1,17 @@
+from sys import exit
+from datetime import datetime
+
 from tables import openFile, IsDescription, Float64Col
 from scipy import array
 import numpy as np
-from query_yes_no import query_yes_no
 import matplotlib.pyplot as plt
-from datetime import datetime
-from sys import exit
+
+from query_yes_no import query_yes_no
 from question_is_digit_plate import question_is_digit_plate
 
 # var1 = ['event_rate', 'filename', 'station_ID', 'kind']
 # var2 = ['event_rate', 'filename', 'station_ID', 'kind']
+
 
 def interpolate(var1,var2):
     low_limit = dict(temp_inside = -200,
