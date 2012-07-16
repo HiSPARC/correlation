@@ -46,8 +46,8 @@ def create_correlation_table(plot_variable1, plot_variable2, values1, values2, s
         end_date = intermediate3.replace('.h5','')
 
         filename = ('interpolated_table_%s_station%d_with__station%d_%s_%s'
-                    '_timeinterval_' + str(seconds) + '.h5') %
-                    (plot_variable1[0][0], plot_variable1[0][2], plot_variable2[0][0], plot_variable2[0][2], start_date, end_date)
+                    '_timeinterval_' + str(seconds) + '.h5' %
+                    (plot_variable1[0][0], plot_variable1[0][2], plot_variable2[0][0], plot_variable2[0][2], start_date, end_date))
 
         # make new table
         data_cor = openFile(filename, 'w')

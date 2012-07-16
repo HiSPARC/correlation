@@ -40,9 +40,9 @@ def down_data_in_parts(station_id, user_start_date_data_interval,
 
     downloaded_data_files = []
 
-    if start_date >= end_date:
+    if start_date >= stop_date:
         print 'Error: Start date is after stop date!'
-    elif end_date >= dt.today():
+    elif stop_date >= dt.today():
         print 'Error: End date is after today!'
     elif start_date < dt(2004, 1, 1):
         print 'Error: Start date is before the start of the HiSPARC project!'
@@ -75,7 +75,7 @@ def monthrange(start, stop):
             cur += td(days = ndays(cur.year, cur.month)[1])
         yield cur, stop
         return
-            
+
 
 def download_part(station_id, start, stop):
     """ Download HiSPARC data from start till stop
