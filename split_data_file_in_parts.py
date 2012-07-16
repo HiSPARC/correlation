@@ -4,10 +4,10 @@ from datetime import date, datetime
 
 def get_number_of_variable_values(var_data):
     if len(var_data.shape) != 1:
-        p1 = var_data[:,0]
-        p2 = var_data[:,1]
-        p3 = var_data[:,2]
-        p4 = var_data[:,3]
+        p1 = var_data[:, 0]
+        p2 = var_data[:, 1]
+        p3 = var_data[:, 2]
+        p4 = var_data[:, 3]
         del var_data
 
         plate_list = []
@@ -133,5 +133,5 @@ if __name__=="__main__":
     #variable = [('barometer','data_s501_2011,12,7_2011,12,8.h5','501','weather','')]
     seconds = 86400
 
-    list, times = split_data_file_in_parts(variable,seconds)
+    list, times = split_data_file_in_parts(variable, seconds)
 

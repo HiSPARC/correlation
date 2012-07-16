@@ -9,7 +9,7 @@ from query_yes_no import query_yes_no
 
 
 def search_operational_stations():
-    """Find active shower and weather stations"""
+    """Find active HiSPARC shower and weather stations"""
 
     if os.path.isfile('active_station_IDs.txt'):
         read_list_from_file()
@@ -23,7 +23,7 @@ def search_operational_stations():
     if update == True:
         active_shower, active_weather = get_active_stations()
         with open('active_station_IDs.txt', 'w') as file:
-            file.write('active_hisparc = [')
+            file.write('active_shower = [')
             file.write(', '.join(str(id) for id in active_shower))
             file.write(']\nactive_weather = [')
             file.write(', '.join(str(id) for id in active_weather))
@@ -39,21 +39,12 @@ def read_list_from_file():
            time.ctime(os.path.getctime('active_station_IDs.txt')))
     print ''
 
-    with open('active_station_IDs.txt', 'r') as file:
+    execfile('active_station_IDs.txt')
 
-        list = file.readlines() # returns a list. Every item from the list is a string containing a line from the file.
-
-        a = list[0].replace('\n', '') # to remove the newline sign from the first line of the file
-        b = a.replace('active_hisparc = ', '') # remove the text from the first line
-        c = list[1].replace('active_weather = ', '') # remove the text from the second line
-
-        active_shower = eval(b) # list of active hisparc station IDs
-        active_weather = eval(c) # list of active weather station IDs
-
-    print '- Currently we have the following HiSPARC stations operational:'
+    print '- At that time the following HiSPARC stations were operational:'
     print active_shower
     print ''
-    print '- Currently we have the following WEATHER stations operational:'
+    print '- And the following WEATHER stations were operational:'
     print active_weather
     print ''
 
@@ -103,11 +94,12 @@ def active_station(station_ids):
 
 
 def get_station_ids():
-    """Get list of all station ids on the Station List page"""
+    """Get list of all station ids from the Station List page"""
 
     url = "http://data.hisparc.nl/django/show/stations/"
     page = urllib2.urlopen(url).read()
-    id_strings = re.findall('(?<=stationNumber\"\>)[0-9]+', page)
+    regex = '(?<=/show/stations/)[0-9]+'
+    id_strings = re.findall(regex, page)
     station_ids = [int(id) for id in id_strings]
     station_ids.sort()
     return station_ids
