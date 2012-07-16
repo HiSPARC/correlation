@@ -63,33 +63,27 @@ def get_active_stations():
 def active_shower_station(station_ids):
     """Check which of the given stations had any shower data yesterday"""
 
-    active_ids = []
-    for id in station_ids:
-        url = "/django/show/source/eventtime/%s/%s" % (id, yesterday_url())
-        if url_exists(url):
-            active_ids.append(id)
+    url_temp = "/django/show/source/eventtime/%s/" + yesterday_url()
+    active_ids = [id for id in station_ids if url_exists(url_template % id)]
+
     return active_ids
 
 
 def active_weather_station(station_ids):
     """Check which of the given stations had any weather data yesterday"""
 
-    active_ids = []
-    for id in station_ids:
-        url = "/django/show/source/barometer/%s/%s" % (id, yesterday_url())
-        if url_exists(url):
-            active_ids.append(id)
+    url_template = "/django/show/source/barometer/%s/" + yesterday_url()
+    active_ids = [id for id in station_ids if url_exists(url_template % id)]
+
     return active_ids
 
 
 def active_station(station_ids):
     """Check which of the given stations had any data yesterday"""
 
-    active_ids = []
-    for id in station_ids:
-        url = "/django/show/stations/%s/%s" % (id, yesterday_url())
-        if url_exists(url):
-            active_ids.append(id)
+    url_template = "/django/show/stations/%s/" + yesterday_url()
+    active_ids = [id for id in station_ids if url_exists(url_template % id)]
+
     return active_ids
 
 
