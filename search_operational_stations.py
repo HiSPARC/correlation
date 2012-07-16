@@ -39,7 +39,7 @@ def read_list_from_file():
            time.ctime(os.path.getctime('active_station_IDs.txt')))
     print ''
 
-    execfile('active_station_IDs.txt')
+    execfile('active_station_IDs.txt', globals())
 
     print '- At that time the following HiSPARC stations were operational:'
     print active_shower
