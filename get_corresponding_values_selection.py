@@ -1,41 +1,9 @@
 from scipy import array
 import tables
+from variable_limits import low_limit, high_limit
+
 
 def get_corresponding_values_selection(plot_variable2, times):
-    low_limit = dict(temp_inside = -200,
-                     temp_outside = -200,
-                     humidity_inside = 0,
-                     humidity_outside = 0,
-                     barometer = 700,
-                     wind_dir = 0,
-                     wind_speed = 0,
-                     solar_rad = 0,
-                     uv = 0,
-                     evapotranspiration = 0,
-                     rain_rate = 0,
-                     heat_index = -200,
-                     dew_point = -200,
-                     wind_chill = -200,
-                     pulseheights = 0,
-                     integrals = 0,
-                     event_rate = 0)
-    high_limit = dict(temp_inside = 200,
-                      temp_outside = 200,
-                      humidity_inside = 100,
-                      humidity_outside = 100,
-                      barometer = 1200,
-                      wind_dir = 360,
-                      wind_speed = 500,
-                      solar_rad = 1500,
-                      uv = 30,
-                      evapotranspiration = 1000,
-                      rain_rate = 1000,
-                      heat_index = 200,
-                      dew_point = 200,
-                      wind_chill = 200,
-                      pulseheights = 25000,
-                      integrals = 1000000000,
-                      event_rate = 3.5)
 
     data_sorted = []
 
@@ -72,7 +40,7 @@ def get_corresponding_values_selection(plot_variable2, times):
 
     variable2_values = []
 
-    for ts,var in data_sorted:
+    for ts, var in data_sorted:
         if ts > times[0] and ts < times[-1]:
             variable2_values.append([ts, var])
 

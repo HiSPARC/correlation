@@ -1,42 +1,10 @@
 from scipy import array
 import tables
 from query_yes_no import query_yes_no
+from variable_limits import low_limit, high_limit
+
 
 def get_corresponding_values_MPV(plot_variable2, times):
-    low_limit = dict(temp_inside = -200,
-                     temp_outside = -200,
-                     humidity_inside = 0,
-                     humidity_outside = 0,
-                     barometer = 700,
-                     wind_dir = 0,
-                     wind_speed = 0,
-                     solar_rad = 0,
-                     uv = 0,
-                     evapotranspiration = 0,
-                     rain_rate = 0,
-                     heat_index = -200,
-                     dew_point = -200,
-                     wind_chill = -200,
-                     pulseheights = 0,
-                     integrals = 0,
-                     event_rate = 0)
-    high_limit = dict(temp_inside = 200,
-                      temp_outside = 200,
-                      humidity_inside = 100,
-                      humidity_outside = 100,
-                      barometer = 1200,
-                      wind_dir = 360,
-                      wind_speed = 500,
-                      solar_rad = 1500,
-                      uv = 30,
-                      evapotranspiration = 1000,
-                      rain_rate = 1000,
-                      heat_index = 200,
-                      dew_point = 200,
-                      wind_chill = 200,
-                      pulseheights = 25000,
-                      integrals = 1000000000,
-                      event_rate = 3.5)
     data_sorted = []
     var_list_without_bad_data2 = []
 
@@ -54,15 +22,15 @@ def get_corresponding_values_MPV(plot_variable2, times):
 
         data.close()
 
-        data_sorted.extend(sorted(zip(ts,var))) # one list with timestamps and variable values
+        data_sorted.extend(sorted(zip(ts, var))) # one list with timestamps and variable values
 
     if plot_variable2[0][0] in low_limit:
         bad_data2 = []
-        for t2,v2 in data_sorted:
+        for t2, v2 in data_sorted:
             if v2 >= low_limit[plot_variable2[0][0]] and v2 <= high_limit[plot_variable2[0][0]]:
                 var_list_without_bad_data2.append((t2, v2))
             else:
-                bad_data2.append((t2,v2))
+                bad_data2.append((t2, v2))
 
         if bad_data2:
             print 'Removed %d rows of bad %s data.' % (len(data_sorted) - len(var_list_without_bad_data2), plot_variable2[0][0])
@@ -86,7 +54,7 @@ def get_corresponding_values_MPV(plot_variable2, times):
 
     for i in range(len(times)):
         mean_data_list_int = []
-        for ts,var in var_list_without_bad_data2:
+        for ts, var in var_list_without_bad_data2:
             if ts > begin_end_timestamp_list[i] and ts < begin_end_timestamp_list[i + 1]:
                 mean_data_list_int.append([ts, var])
 

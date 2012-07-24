@@ -1,8 +1,6 @@
-
 def get_number_of_variable_values(var_data):
     if len(var_data.shape) != 1:
         p1 = var_data[:, 0]
-        print p1
         p2 = var_data[:, 1]
         p3 = var_data[:, 2]
         p4 = var_data[:, 3]
@@ -17,6 +15,7 @@ def get_number_of_variable_values(var_data):
             plate_list.append(True)
         if sorted(p4)[-1] != -1:
             plate_list.append(True)
+
         number_of_plates = len(plate_list)
 
     elif len(var_data.shape) == 1:
@@ -25,9 +24,9 @@ def get_number_of_variable_values(var_data):
     return number_of_plates
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     import tables
-    with tables.openFile('data_s502_2011,6,1 - 2011,7,1.h5','r') as data:
+    with tables.openFile('data_s502_2011,6,1 - 2011,7,1.h5', 'r') as data:
         colnames_events = data.root.s502.events.colnames
 
         for colname in colnames_events:

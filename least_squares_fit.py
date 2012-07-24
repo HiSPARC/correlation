@@ -3,34 +3,34 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import array
 from scipy.stats.stats import chisquare, chisqprob
+
+import question
 from query_yes_no import query_yes_no
 from downsample import downsample
 from datetime import datetime
-from question_is_digit_plate import question_is_digit_plate
 from get_number_of_plates import get_number_of_plates
+from units import units
 
-# e.g. filename = cor_data_barometer_501_event_rate_502.h5
-# e.g. var1 = [('barometer', 'data_s501_2011,6,30 - 2011,6,30.h5', '501', 'weather'), ('barometer', 'data_s501_2011,7,1 - 2011,7,31.h5', '501', 'weather')]
-# e.g. var2 = [('event_rate', 'data_s502_2011,6,30 - 2011,6,30.h5', '502', 'events'), ('event_rate', 'data_s502_2011,7,1 - 2011,7,31.h5', '502', 'events')]
 
-def lose_nans(x,y):
+def lose_nans(x, y):
     x = [str(i) for i in x]
     y = [str(i) for i in y]
 
-    combo = zip(x,y)
+    combo = zip(x, y)
 
     list = []
     for i in range(len(combo)):
         if combo[i][0] != 'nan' and combo[i][1] != 'nan':
             list.append(combo[i])
 
-    x,y = zip(*list)
+    x, y = zip(*list)
     x = [float(i) for i in x]
     x = array(x)
     y = [float(i) for i in y]
     y = array(y)
 
     return x,y
+
 
 def get_date_interval_from_file_names(var1, var2):
     first_file = var1[0][1]
@@ -46,35 +46,8 @@ def get_date_interval_from_file_names(var1, var2):
 
     return start_date_interval, stop_date_interval
 
-def least_squares_fit(filename, variable1, variable2):
 
-    units = dict(event_id = '' ,
-                 timestamp = 'seconds',
-                 temp_inside = 'degrees Celcius',
-                 temp_outside = 'degrees Celcius',
-                 humidity_inside = '%',
-                 humidity_outside = '%',
-                 barometer = 'hectoPascal',
-                 wind_dir = 'degrees',
-                 wind_speed = 'm/s',
-                 solar_rad = 'Watt/m^2',
-                 uv = '',
-                 evapotranspiration = 'millimetre',
-                 rain_rate = 'millimetre/hour',
-                 heat_index = 'degrees Celcius',
-                 dew_point = 'degrees Celcius',
-                 wind_chill = 'degrees Celcius',
-                 nanoseconds = 'nanoseconds',
-                 ext_timestamp = 'nanoseconds',
-                 data_reduction = '',
-                 trigger_pattern = '',
-                 baseline = 'ADC counts',
-                 std_dev = 'ADC counts',
-                 n_peaks = '',
-                 pulseheights = 'ADC counts',
-                 integrals = 'ADC counts nanonseconds',
-                 traces = '',
-                 event_rate = 'Hz')
+def least_squares_fit(filename, variable1, variable2):
 
     with tables.openFile(filename, 'r') as data:
         # fetch values variable 1 and 2
@@ -85,12 +58,12 @@ def least_squares_fit(filename, variable1, variable2):
 
     if len(variable_1.shape) != 1:
         print 'There are %d plates with an individual %s value.' % (variable_1.shape[1], variable1[0][0])
-        plate_number1 = int(question_is_digit_plate("Enter the plate number that you want to you use in your correlation analysis ( e.g. '1' ): ", variable_1.shape[1]))
+        plate_number1 = int(question.digit_plate("Enter the plate number that you want to you use in your correlation analysis ( e.g. '1' ): ", variable_1.shape[1]))
         variable_1 = variable_1[:, plate_number1 - 1]
 
     if len(variable_2.shape) != 1:
         print 'There are %d plates with an individual %s value.' % (variable_2.shape[1], variable2[0][0])
-        plate_number2 = int(question_is_digit_plate("Enter the plate number that you want to you use in your correlation analysis ( e.g. '1' ): ", variable_2.shape[1]))
+        plate_number2 = int(question.digit_plate("Enter the plate number that you want to you use in your correlation analysis ( e.g. '1' ): ", variable_2.shape[1]))
         variable_2 = variable_2[:, plate_number2 - 1]
 
     if y_axis == True:
@@ -147,13 +120,13 @@ def least_squares_fit(filename, variable1, variable2):
         correlation = 'a STRONG'
 
     if cor_coef >= 0.1:
-        pos_neg = 'POSITIVE'
+        pos_neg = ' POSITIVE'
     elif cor_coef <= -0.1:
-        pos_neg = 'NEGATIVE'
+        pos_neg = ' NEGATIVE'
     else:
         pos_neg = ''
 
-    conclusion = "For this sample you have found %s %s correlation between '%s' and '%s'." % (correlation, pos_neg, variable1[0][0], variable2[0][0])
+    conclusion = "For this sample you have found %s%s correlation between '%s' and '%s'." % (correlation, pos_neg, variable1[0][0], variable2[0][0])
     print conclusion
 
     """
@@ -265,19 +238,3 @@ def least_squares_fit(filename, variable1, variable2):
 
     plt.show()
     """
-
-"""
-
-#variable1 = [('event_rate', 'data_s501_2011,5,23 - 2011,5,31.h5', '501', 'events'), ('event_rate', 'data_s501_2011,6,1 - 2011,6,30.h5', '501', 'events'), ('event_rate', 'data_s501_2011,7,1 - 2011,7,31.h5', '501', 'events'), ('event_rate', 'data_s501_2011,8,1 - 2011,8,31.h5', '501', 'events'), ('event_rate', 'data_s501_2011,9,1 - 2011,9,30.h5', '501', 'events'), ('event_rate', 'data_s501_2011,10,1 - 2011,10,15.h5', '501', 'events')]
-#variable2 = [('barometer', 'data_s501_2011,5,23 - 2011,5,31.h5', '501', 'weather'), ('barometer', 'data_s501_2011,6,1 - 2011,6,30.h5', '501', 'weather'), ('barometer', 'data_s501_2011,7,1 - 2011,7,31.h5', '501', 'weather'), ('barometer', 'data_s501_2011,8,1 - 2011,8,31.h5', '501', 'weather'), ('barometer', 'data_s501_2011,9,1 - 2011,9,30.h5', '501', 'weather'), ('barometer', 'data_s501_2011,10,1 - 2011,10,15.h5', '501', 'weather')]
-
-
-
-variable1 = [('pulseheights', 'data_s501_2011,7,1 - 2011,7,10.h5', '501', 'events')]
-variable2 = [('barometer', 'data_s501_2011,7,1 - 2011,7,10.h5', '501', 'weather')]
-
-filename = 'cor_pulseheights_501_barometer_501_2011,7,1 - 2011,7,10_s501_2011,7,1 - 2011,7,10.h5'
-
-least_squares_fit(filename, variable1,variable2)
-
-"""

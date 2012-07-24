@@ -1,12 +1,12 @@
-from sys import exit
-from pylab import *
-from query_yes_no import query_yes_no
 import os
+from sys import exit
+
+from pylab import *
+
+import question
+from query_yes_no import query_yes_no
 from down_data_in_parts_tot import down_data_in_parts
 from kind_of_data import kind_of_data
-from question_is_digit import question_is_digit
-from question_is_digit_and_date import question_is_digit_and_date
-from question_is_digit_with_constraint import question_is_digit_with_constraint
 from choose_variables_for_correlation import choose_variables_for_correlation
 from search_operational_stations import search_operational_stations
 from show_downloaded_file_names import show_downloaded_file_names
@@ -48,10 +48,10 @@ if download_question == True:
     if show_operational_stations == True:
         search_operational_stations()
 
-    user_hisparc_station_id_1 = question_is_digit('Enter the HiSPARC STATION ID from which you want to download data ( e.g. 501 ): ')
+    user_hisparc_station_id_1 = question.digit('Enter the HiSPARC STATION ID from which you want to download data ( e.g. 501 ): ')
     stations.append(user_hisparc_station_id_1)
-    user_start_date_data_interval = question_is_digit_and_date('Enter START date data interval ( e.g. 2011,7,21 ) : ')
-    user_stop_date_data_interval = question_is_digit_and_date('Enter STOP date data interval ( e.g. 2011,7,22 ) : ')
+    user_start_date_data_interval = question.digit_and_date('Enter START date data interval ( e.g. 2011,7,21 ) : ')
+    user_stop_date_data_interval = question.digit_and_date('Enter STOP date data interval ( e.g. 2011,7,22 ) : ')
 
     list_file_names_station_1 = down_data_in_parts(user_hisparc_station_id_1, user_start_date_data_interval, user_stop_date_data_interval)
 
@@ -65,7 +65,7 @@ if download_question == True:
     down_data_another_station = query_yes_no('Do you want to download data from another station?')
 
     if down_data_another_station == True:
-        user_hisparc_station_id_2 = question_is_digit('Enter the HiSPARC STATION ID from which you want to download data ( e.g. 501 ): ')
+        user_hisparc_station_id_2 = question.digit('Enter the HiSPARC STATION ID from which you want to download data ( e.g. 501 ): ')
         stations.append(user_hisparc_station_id_2)
         print''
 
@@ -81,8 +81,8 @@ if download_question == True:
             show_downloaded_file_names(kind_of_data_in_table)
 
         elif same_dates == False:
-            user_start_date_data_interval = question_is_digit_and_date('Enter START date data interval as yyyy,mm,dd ( e.g. 2011,7,21 ) : ')
-            user_stop_date_data_interval = question_is_digit_and_date('Enter STOP date data interval ( e.g. 2011,7,22 ) : ')
+            user_start_date_data_interval = question.digit_and_date('Enter START date data interval as yyyy,mm,dd ( e.g. 2011,7,21 ) : ')
+            user_stop_date_data_interval = question.digit_and_date('Enter STOP date data interval ( e.g. 2011,7,22 ) : ')
             list_file_names_station_2 = down_data_in_parts(user_hisparc_station_id_2, user_start_date_data_interval, user_stop_date_data_interval)
 
             if not list_file_names_station_2:
@@ -106,7 +106,7 @@ elif plot_question == True and download_question == True:
 
 
 if plot_question == True and use_downloaded_files == True:
-    plot_variable1 = choose_one_variable(kind_of_data_in_table, stations) #e.g. plot_variable = [('event_rate','data_s501_2011,12,7_2011,12,8.h5','501','events','')]
+    plot_variable1 = choose_one_variable(kind_of_data_in_table, stations)  # e.g. plot_variable = [('event_rate','data_s501_2011,12,7_2011,12,8.h5','501','events','')]
     values1, times, returntype = plot_data(plot_variable1)
 
 if plot_question == True and use_downloaded_files == False:
@@ -114,15 +114,15 @@ if plot_question == True and use_downloaded_files == False:
     stations = []
 
     print ''
-    station_ID = question_is_digit("Enter the station ID that you want to use in your analysis ( e.g. 501 ) ")
+    station_ID = question.digit("Enter the station ID that you want to use in your analysis ( e.g. 501 ) ")
     stations.append(station_ID)
     print ''
-    number_of_files = question_is_digit("Enter the NUMBER of FILENAMES for station %s that you want to use in your analysis ( e.g. 6 ): " % station_ID)
+    number_of_files = question.digit("Enter the NUMBER of FILENAMES for station %s that you want to use in your analysis ( e.g. 6 ): " % station_ID)
     print ''
     print "You are going to enter filenames ( e.g. data_s501_2011,7,21_2011,7,22.h5 )"
     print 'Enter the filenames in CHRONOLOGICAL ORDER. '
     print ''
-    for j in range(1, int(number_of_files)+1):
+    for j in range(1, int(number_of_files) + 1):
         while True:
             filename = raw_input('For station %s enter filename number %d: ' % (station_ID, j))
             ID = get_station_ID_from_filename(filename)
@@ -154,11 +154,11 @@ if plot_question == True and correlate_question == True:
         stations = []
 
         print ''
-        station_ID = question_is_digit("Enter the station ID that you want to use in your analysis ( e.g. 501 ) ")
+        station_ID = question.digit("Enter the station ID that you want to use in your analysis ( e.g. 501 ) ")
 
         stations.append(station_ID)
         print ''
-        number_of_files = question_is_digit("Enter the NUMBER of FILENAMES for station %s that you want to use in your analysis ( e.g. 6 ): " % station_ID)
+        number_of_files = question.digit("Enter the NUMBER of FILENAMES for station %s that you want to use in your analysis ( e.g. 6 ): " % station_ID)
         print ''
         print "You are going to enter filenames ( e.g. data_s501_2011,7,21_2011,7,21.h5 )"
         print 'Enter the filenames in CHRONOLOGICAL ORDER. '
@@ -179,7 +179,7 @@ if plot_question == True and correlate_question == True:
         if returntype == 'MPV':
             if len(times) > 1:
                 mean_variable_list = get_corresponding_values_MPV(plot_variable2, times)
-                filen = create_correlation_table(plot_variable1,plot_variable2, values1, mean_variable_list, int(times[1] - times[0]))
+                filen = create_correlation_table(plot_variable1, plot_variable2, values1, mean_variable_list, int(times[1] - times[0]))
                 least_squares_fit(filen, plot_variable1, plot_variable2)
             else:
                 print 'Correlation is not possible with one data point.'
@@ -190,8 +190,8 @@ if plot_question == True and correlate_question == True:
             least_squares_fit(filen, plot_variable1, plot_variable2)
 
         elif returntype == 'part':
-            complementary_variable2_list = get_corresponding_values_selection(plot_variable2,times)
-            filen = interpolate_selection(array(zip(times, values1)),complementary_variable2_list)
+            complementary_variable2_list = get_corresponding_values_selection(plot_variable2, times)
+            filen = interpolate_selection(array(zip(times, values1)), complementary_variable2_list)
             least_squares_fit(filen, plot_variable1, plot_variable2)
 
         else:
@@ -214,23 +214,23 @@ if correlate_question == True and use_downloaded_files == True and use_plotted_f
 
 if correlate_question == True and use_downloaded_files == False and use_plotted_files == False:
     print ''
-    number_of_stations = question_is_digit_with_constraint("Enter the NUMBER of STATION IDs that you want to use in your analysis ( e.g. 2 ): ")
+    number_of_stations = question.digit_with_constraint("Enter the NUMBER of STATION IDs that you want to use in your analysis ( e.g. 2 ): ")
     list_files = []
     stations = []
     for i in range(1, int(number_of_stations) + 1):
         print ''
-        station_ID = question_is_digit("Enter the station ID for station %d: " % i)
+        station_ID = question.digit("Enter the station ID for station %d: " % i)
 
         stations.append(station_ID)
         print ''
-        number_of_files = question_is_digit("Enter the NUMBER of FILENAMES for station %s that you want to use in your analysis ( e.g. 6 ): " % station_ID)
+        number_of_files = question.digit("Enter the NUMBER of FILENAMES for station %s that you want to use in your analysis ( e.g. 6 ): " % station_ID)
         print ''
         print "You are going to enter filenames ( e.g. data_s501_2011,7,21_2011,7,21.h5 )"
         print 'Enter the filenames in CHRONOLOGICAL ORDER. '
         print ''
         for j in range(1, int(number_of_files) + 1):
             while True:
-                filename = raw_input('For station %d enter filename number %d: ' % (i, j))
+                filename = raw_input('For station %d enter filename number %d: ' % (station_ID, j))
                 ID = get_station_ID_from_filename(filename)
                 if ID in stations:
                     list_files.append(filename) # pas 'kind of data' aan zodat kijkt of hetzelfde station

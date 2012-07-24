@@ -37,34 +37,34 @@ def create_correlation_table(plot_variable1, plot_variable2, values1, values2, s
             else:
                 print 'weird'
 
-
         # create filename for correlation table from data filenames
-        intermediate1 = plot_variable1[0][1].replace('data_s%d_' % plot_variable1[0][2], '')
+        intermediate1 = plot_variable1[0][1].replace('data_s%s_' % plot_variable1[0][2], '')
         intermediate2 = intermediate1.partition('_')
         start_date = intermediate2[0]
         intermediate3 = intermediate2[2][1:]
-        end_date = intermediate3.replace('.h5','')
+        end_date = intermediate3.replace('.h5', '')
 
-        filename = ('interpolated_table_%s_station%d_with__station%d_%s_%s'
-                    '_timeinterval_' + str(seconds) + '.h5' %
-                    (plot_variable1[0][0], plot_variable1[0][2], plot_variable2[0][0], plot_variable2[0][2], start_date, end_date))
+        filename = (('interpolated_table_%s_station%s_with_%s_station%s_%s_%s'
+                     '_timeinterval_%d.h5') %
+                    (plot_variable1[0][0], plot_variable1[0][2],
+                     plot_variable2[0][0], plot_variable2[0][2],
+                     start_date, end_date, seconds))
 
         # make new table
-        data_cor = openFile(filename, 'w')
-        group_variable1 = data_cor.createGroup("/", 'correlation')
-        table_variable1 = data_cor.createTable(group_variable1, 'table', Variable1)
+        with openFile(filename, 'w') as data_cor:
+            group_variable1 = data_cor.createGroup("/", 'correlation')
+            table_variable1 = data_cor.createTable(group_variable1, 'table', Variable1)
 
-        # Insert a new particle record
-        particle = table_variable1.row
+            # Insert a new particle record
+            particle = table_variable1.row
 
-        for i in range(len(values1)):
-            particle['variable1'] = values1[i]
-            particle['variable2'] = values2[i]
-            particle.append()
+            for i in range(len(values1)):
+                particle['variable1'] = values1[i]
+                particle['variable2'] = values2[i]
+                particle.append()
 
-        table_variable1.flush()
+            table_variable1.flush()
 
-        data_cor.close()
         print 'Done.'
         return filename
     else:

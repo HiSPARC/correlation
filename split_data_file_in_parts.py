@@ -2,29 +2,8 @@ import tables
 from scipy import array
 from datetime import date, datetime
 
-def get_number_of_variable_values(var_data):
-    if len(var_data.shape) != 1:
-        p1 = var_data[:, 0]
-        p2 = var_data[:, 1]
-        p3 = var_data[:, 2]
-        p4 = var_data[:, 3]
-        del var_data
+from get_number_of_variable_values import get_number_of_variable_values
 
-        plate_list = []
-        if sorted(p1)[-1] != -1:
-            plate_list.append(True)
-        if sorted(p2)[-1] != -1:
-            plate_list.append(True)
-        if sorted(p3)[-1] != -1:
-            plate_list.append(True)
-        if sorted(p4)[-1] != -1:
-            plate_list.append(True)
-        number_of_plates = len(plate_list)
-
-    elif len(var_data.shape) == 1:
-        number_of_plates = 1
-
-    return number_of_plates
 
 def split_data_file_in_parts(variable, seconds):
 
@@ -33,7 +12,7 @@ def split_data_file_in_parts(variable, seconds):
     for i in range(len(variable)):
 
         station_ID = variable[i][2]
-        with tables.openFile(variable[i][1],'r') as data:
+        with tables.openFile(variable[i][1], 'r') as data:
             tree = "data.root.s%s.%s.col('timestamp')" % (station_ID, variable[i][3])
             timestamps = eval(tree)
 
@@ -41,36 +20,17 @@ def split_data_file_in_parts(variable, seconds):
             var_data = eval(tree)
 
         list = []
-        if len(var_data.shape) != 1: # check if it is an array of values
+        number_of_plates = get_number_of_variable_values(var_data)
 
-            p1 = var_data[:, 0]
-            p2 = var_data[:, 1]
-            p3 = var_data[:, 2]
-            p4 = var_data[:, 3]
-            del var_data
-
-            plate_list = []
-            if sorted(p1)[-1] != -1:
-                plate_list.append(True)
-            if sorted(p2)[-1] != -1:
-                plate_list.append(True)
-            if sorted(p3)[-1] != -1:
-                plate_list.append(True)
-            if sorted(p4)[-1] != -1:
-                plate_list.append(True)
-
-            number_of_plates = len(plate_list)
-
-            if number_of_plates == 4:
-                list = zip(p1.tolist(), p2.tolist(), p3.tolist(), p4.tolist())
-            elif number_of_plates == 2:
-                list = zip(p1.tolist(), p2.tolist())
-
-        elif len(var_data.shape) == 1: # check if it is an array of values
+        if number_of_plates == 4:
+            list = zip(var_data[:, 0].tolist(), var_data[:, 1].tolist(), var_data[:, 2].tolist(), var_data[:, 3].tolist())
+        elif number_of_plates == 2:
+            list = zip(var_data[:, 0].tolist(), var_data[:, 2].tolist())
+        elif number_of_plates == 1:
             list = var_data.tolist()
-            del var_data
         else:
             print 'weird!'
+        del var_data
 
         dat_sorted_part = sorted(zip(timestamps, list))
         dat_sorted.extend(dat_sorted_part)
@@ -90,7 +50,6 @@ def split_data_file_in_parts(variable, seconds):
     # e.g. begin = 1323388804 - (1323388804  - 1323388800) + 86400 = 1323388804 - 4 + 86400 = 1323475200
     # e.g. begin = 1323475200 - (1323475200  - 1323475200) + 86400 = 1323475200 - 0 + 86400 = 1323561600
     # e.g. begin = 1323561601 - (1323561601  - 1323561600) + 86400 = 1323561601 - 1 + 86400 = 1323648000 etc.
-
 
     # make list with the timestamps in the middle of every time interval (for later use in plot)
     times_timestamp = [dat_sorted[0][0] + (seconds / 2) + i * seconds
@@ -133,4 +92,3 @@ if __name__=="__main__":
     seconds = 86400
 
     list, times = split_data_file_in_parts(variable, seconds)
-

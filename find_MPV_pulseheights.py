@@ -1,44 +1,20 @@
 from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
+
 from query_yes_no import query_yes_no
 from get_number_of_variable_values import get_number_of_variable_values
+from units import units
+
 
 def func(x, a, b, c):
-    return a * (x - b)**2 + c
+    return a * (x - b) ** 2 + c
 
 # pulseheights_list = [array_day1(p_plate_1, p_plate_2, p_plate_3, p_plate_4), arrayday2(...) etc.]
 # plot_variable = [('pulseheights','data_s501_2011,12,7 - 2011,12,8.h5','501','events')]
 # time = [t0,t1,t2...]
+# MPV_list, number_of_plates, timing = find_MPV_pulseheights(pulseheights_list, plot_variable, time, number_of_plates)
 
 def find_MPV_pulseheights(pulseheights_list, plot_variable, time, number_of_plates):
-
-    units = dict(event_id = None,
-                 timestamp = 'seconds',
-                 temp_inside = 'degrees Celcius',
-                 temp_outside = 'degrees Celcius',
-                 humidity_inside = '%',
-                 humidity_outside = '%',
-                 barometer = 'hectoPascal',
-                 wind_dir = 'degrees',
-                 wind_speed = 'm/s',
-                 solar_rad = 'Watt/square metre',
-                 uv = '',
-                 evapotranspiration = 'millimetre',
-                 rain_rate = 'millimetre/hour',
-                 heat_index = 'degrees Celcius',
-                 dew_point = 'degrees Celcius',
-                 wind_chill = 'degrees Celcius',
-                 nanoseconds = 'nanoseconds',
-                 ext_timestamp = 'nanoseconds',
-                 data_reduction = '',
-                 trigger_pattern = '',
-                 baseline = 'ADC counts',
-                 std_dev = 'ADC counts',
-                 n_peaks = '',
-                 pulseheights = 'ADC counts',
-                 integrals = 'ADC counts nanonseconds',
-                 traces = '',
-                 event_rate = 'Hertz')
 
     print ''
     show_plot = query_yes_no('Do you want to see a plot of every individual fit for every plate?')
@@ -51,32 +27,6 @@ def find_MPV_pulseheights(pulseheights_list, plot_variable, time, number_of_plat
                 #print 'Time interval %d of %d.' % (pulseheights_list.index(p) + 1, len(pulseheights_list))
 
                 MPV_MIPs = []
-                """
-                # check the number of scintillation plates
-
-                print pulseheights_list[p][:3]
-                p1,p2,p3,p4 = zip(*pulseheights_list[p])
-                print p1[:3]
-                print p2[:3]
-                print p3[:3]
-                print p4[:3]
-                print sorted(p1)[-1]
-                print sorted(p2)[-1]
-                print sorted(p3)[-1]
-                print sorted(p4)[-1]
-                plate_list = []
-                if sorted(p1)[-1] != -1:
-                    plate_list.append(True)
-                if sorted(p2)[-1] != -1:
-                    plate_list.append(True)
-                if sorted(p3)[-1] != -1:
-                    plate_list.append(True)
-                if sorted(p4)[-1] != -1:
-                    plate_list.append(True)
-                number_of_plates = len(plate_list)
-
-                print 'number_of_plates = ', number_of_plates
-                """
 
                 for i in range(number_of_plates):
 
@@ -146,7 +96,7 @@ def find_MPV_pulseheights(pulseheights_list, plot_variable, time, number_of_plat
 
                             p_red = filter(lambda x: x < MPV_value + k and x > MPV_value - k, p_plate_total) # select the fit data that is within the interval
 
-                            plo = plt.hist(p_red,40)
+                            plo = plt.hist(p_red, 40)
                             del p_red
 
                             values = plo[0]
@@ -180,7 +130,7 @@ def find_MPV_pulseheights(pulseheights_list, plot_variable, time, number_of_plat
                                 if a < 0 and deviation < 60:
                                     success = True
                                     #print success
-                                    fit_values_list.append([deviation,a,b,c,k])
+                                    fit_values_list.append([deviation, a, b, c, k])
 
                             except RuntimeError:
                                 print 'Error'

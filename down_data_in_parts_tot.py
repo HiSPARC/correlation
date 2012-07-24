@@ -63,16 +63,16 @@ def monthrange(start, stop):
     month until stop.
 
     """
-    a_day = td(days = 1)
+    a_day = td(days=1)
     if (stop - start).days < 31:
         yield start, stop
         return
     else:
-        cur = start + td(days = ndays(start.year, start.month)[1] - start.day + 1)
+        cur = start + td(days=ndays(start.year, start.month)[1] - start.day + 1)
         yield start, cur
-        while cur + td(days = ndays(cur.year, cur.month)[1]) < stop:
-            yield cur, cur + td(days = ndays(cur.year, cur.month)[1])
-            cur += td(days = ndays(cur.year, cur.month)[1])
+        while cur + td(days=ndays(cur.year, cur.month)[1]) < stop:
+            yield cur, cur + td(days=ndays(cur.year, cur.month)[1])
+            cur += td(days=ndays(cur.year, cur.month)[1])
         yield cur, stop
         return
 
@@ -85,8 +85,8 @@ def download_part(station_id, start, stop):
     tree = '/s' + station_id
     path = 'data.root.s' + station_id
     filename = 'data_s%d_%s_%s.h5' % (hisp_station,
-                                      start.strftime('%Y,%m,%d'),
-                                      stop.strftime('%Y,%m,%d'))
+                                      start.strftime('%Y%m%d'),
+                                      stop.strftime('%Y%m%d'))
     with tables.openFile(filename, 'w') as data:
         download_data(data, tree, hisp_station, start, stop)
         remove_dups(data, eval(path))
