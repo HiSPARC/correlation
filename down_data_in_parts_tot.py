@@ -8,8 +8,7 @@ import tables
 from pylab import *
 from hisparc.publicdb import download_data
 
-from remove_dups_hisparcdata import remove_dups
-from remove_dups_weatherdata import remove_dups_weatherdata
+from remove_duplicate_events import remove_duplicate_events
 from check_if_weather import check_if_weather
 
 
@@ -89,10 +88,10 @@ def download_part(station_id, start, stop):
                                       stop.strftime('%Y%m%d'))
     with tables.openFile(filename, 'w') as data:
         download_data(data, tree, hisp_station, start, stop)
-        remove_dups(data, eval(path))
+        remove_duplicate_events(data, eval(path))
         weather_data_in_file = check_if_weather(data, filename)
         if weather_data_in_file:
-            remove_dups_weatherdata(data, eval(path))
+            remove_duplicate_events(data, eval(path), kind='weather')
     print ''
     print "'" + filename + "' has downloaded."
     print 'You can find it at the location: ' + os.getcwd()
