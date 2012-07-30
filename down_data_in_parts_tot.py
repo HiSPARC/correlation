@@ -1,5 +1,4 @@
-from datetime import datetime as dt
-from datetime import timedelta as td
+from datetime import datetime as dt, timedelta as td
 from calendar import monthrange as ndays
 import re
 import os

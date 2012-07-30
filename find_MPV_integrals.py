@@ -1,8 +1,8 @@
 from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
 from scipy import array
-from query_yes_no import query_yes_no
 
+from query_yes_no import query_yes_no
 from get_number_of_plates import get_number_of_plates
 from units import units
 
@@ -30,7 +30,7 @@ def find_MPV_integrals(pulseintegral_list, plot_variable):
         for i in range(number_of_plates):
 
             print ''
-            print 'plate ', i + 1
+            print 'plate %d ' % i + 1
 
             p_plate_total = array(pi[:, i])
 
@@ -73,10 +73,10 @@ def find_MPV_integrals(pulseintegral_list, plot_variable):
 
             for k in extra:
 
-                p_red = filter(lambda x: x < MPV_value + k and x > MPV_value - k, p_plate_total)
+                pi_red = [pi for pi in p_plate_total if (MPV_value - k < pi < MPV_value + k)]
 
-                plo = plt.hist(p_red, 500)
-                del p_red
+                plo = plt.hist(pi_red, 500)
+                del pi_red
 
                 values = plo[0]
                 #print values
@@ -133,7 +133,7 @@ def find_MPV_integrals(pulseintegral_list, plot_variable):
                     print ''
                     plt.show()
 
-                print 'MPV value = %.2f %s ' % (list[0][2], units[plot_variable[0][0]])
+                print 'MPV value = %.2f %s' % (list[0][2], units[plot_variable[0][0]])
                 print ''
 
             else:
@@ -143,7 +143,7 @@ def find_MPV_integrals(pulseintegral_list, plot_variable):
                 print ''
 
                 print ''
-                print 'MPV value = %.2f %s ' % (MPV_value, units[plot_variable[0][0]])
+                print 'MPV value = %.2f %s' % (MPV_value, units[plot_variable[0][0]])
                 print ''
 
                 if show_plot:

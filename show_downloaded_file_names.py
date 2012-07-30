@@ -1,5 +1,11 @@
 
 def show_downloaded_file_names(kind_of_data_in_table):
+    """ Show what kind of data is in a downloaded file
+
+    kind_of_data_in_table = ([filename, shower, weather], [..], ..)
+
+    """
+
     print ' _____________________________________________________________'
     print '|                                                             |'
     print '| You have downloaded the file(s):       containing data of:  |'

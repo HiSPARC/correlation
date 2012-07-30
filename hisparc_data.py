@@ -21,22 +21,20 @@ from create_correlation_table import create_correlation_table
 from interpolate_selection import interpolate_selection
 
 print ''
-print 'MM     $MM  MMM     MMMM     MMMMMMM         MMM      MMMMMMM         MMMM'
-print 'MM     $MM  MMM   MMMMMMMM   MMMMMMMMM8     MMMM      MMMMMMMMMM   ZMMMMMMMM'
-print 'MM     $MM       MMM    MMM  MMM    =MM     MMMMM     MM      MM  =MM     MMM'
-print 'MM     $MM  MMM   MMMMN      MMM    MMM    MMN MMN    MM     MMM  MMM'
-print 'MMMMMMMMMM  MMM     MMMMMM   MMMMMMMMM    MMM   MM    MMMMMMMM    MM8'
-print 'MM     $MM  MMM         MMM  MMM          MMMMMMMMM   MM   MMM~   MMM      M'
-print 'MM     $MM  MMM  MMM    MMM  MMM         MMM     MM   MM    =MM+   MMM   +MMM'
-print 'MM     $MM  MMM   MMMMMMMM   MMM        8MM      MMM  MM      MMO   MMMMMMM='
+print 'MM     MM  MMM     MMMM     MMMMMMM         MMM      MMMMMMM         MMMM'
+print 'MM     MM  MMM   MMMMMMMM   MMMMMMMMM8     MMMM      MMMMMMMMMM   ZMMMMMMMM'
+print 'MM     MM       MMM    MMM  MMM    =MM     MMMMM     MM      MM  =MM     MMM'
+print 'MM     MM  MMM   MMMMN      MMM    MMM    MMN MMN    MM     MMM  MMM'
+print 'MMMMMMMMM  MMM     MMMMMM   MMMMMMMMM    MMM   MM    MMMMMMMM    MM8'
+print 'MM     MM  MMM         MMM  MMM          MMMMMMMMM   MM   MMM~   MMM      M'
+print 'MM     MM  MMM  MMM    MMM  MMM         MMM     MM   MM    =MM+   MMM   +MMM'
+print 'MM     MM  MMM   MMMMMMMM   MMM        8MM      MMM  MM      MMO   MMMMMMM='
 print ''
-
 print ''
 print 'Welcome to HiSPARC download and correlation software!'
 print ''
 print 'With this program you can download HiSPARC data, plot data and search for a correlation between HiSPARC shower and/or weather variables.'
 print ''
-
 
 download_question = query_yes_no('Do you want to download DATA?')
 stations = []
@@ -104,7 +102,6 @@ if plot_question == True and download_question == False:
 elif plot_question == True and download_question == True:
     use_downloaded_files = query_yes_no('Do you want to use the data you downloaded earlier?')
 
-
 if plot_question == True and use_downloaded_files == True:
     plot_variable1 = choose_one_variable(kind_of_data_in_table, stations)  # e.g. plot_variable = [('event_rate','data_s501_2011,12,7_2011,12,8.h5','501','events','')]
     values1, times, returntype = plot_data(plot_variable1)
@@ -135,7 +132,6 @@ if plot_question == True and use_downloaded_files == False:
     kind_of_data_in_table = kind_of_data(list_files) # e.g.  [('data_s501_2011,6,30_2011,6,30.h5', True, True), ('data_s502_2011,6,30_2011,6,30.h5', True, False)]
     plot_variable1 = choose_one_variable(kind_of_data_in_table, stations) #e.g. plot_variable = [('event_rate','data_s501_2011,12,7_2011,12,8.h5','501','events','')]
     values1, times, returntype = plot_data(plot_variable1)
-
 
 print ''
 correlate_question = query_yes_no('Do you want to CORRELATE data?')
