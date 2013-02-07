@@ -1,6 +1,7 @@
 import re
 import os
 import time
+import json
 from datetime import datetime as dt, timedelta
 import urllib2
 import httplib
@@ -53,7 +54,6 @@ def get_active_stations():
     """Check which of the given stations had any shower or weather data yesterday"""
 
     station_ids = get_station_ids()
-    active_stations = active_station(station_ids)
     active_shower = active_shower_station(active_stations)
     active_weather = active_weather_station(active_stations)
 
@@ -61,58 +61,47 @@ def get_active_stations():
 
 
 def active_shower_station(station_ids):
-    """Check which of the given stations had any shower data yesterday"""
+    """Check which of the given station ids had any shower data yesterday"""
 
-    url_temp = "/django/show/source/eventtime/%s/" + yesterday_url()
-    active_ids = [id for id in station_ids if url_exists(url_template % id)]
+    url_template = "http://data.hisparc.nl/django/api/station/%s/data/" + yesterday_url()
+    active_ids = [id for id in station_ids if get_json(url_template % id)]
 
     return active_ids
 
 
 def active_weather_station(station_ids):
-    """Check which of the given stations had any weather data yesterday"""
+    """Check which of the given station ids had any weather data yesterday"""
 
-    url_template = "/django/show/source/barometer/%s/" + yesterday_url()
-    active_ids = [id for id in station_ids if url_exists(url_template % id)]
-
-    return active_ids
-
-
-def active_station(station_ids):
-    """Check which of the given stations had any data yesterday"""
-
-    url_template = "/django/show/stations/%s/" + yesterday_url()
-    active_ids = [id for id in station_ids if url_exists(url_template % id)]
+    url_template = "http://data.hisparc.nl/django/api/station/%s/weather/" + yesterday_url()
+    active_ids = [id for id in station_ids if get_json(url_template % id)]
 
     return active_ids
 
 
 def get_station_ids():
-    """Get list of all station ids from the Station List page"""
+    """Get list of all station ids from the API Stations List page"""
 
-    url = "http://data.hisparc.nl/django/show/stations/"
-    page = urllib2.urlopen(url).read()
-    regex = '(?<=/show/stations/)[0-9]+'
-    id_strings = re.findall(regex, page)
-    station_ids = [int(id) for id in id_strings]
-    station_ids.sort()
+    url = "http://data.hisparc.nl/django/api/stations"
+    stations_json = get_json(url)
+    station_ids = [station['number'] for station in stations_json]
+
     return station_ids
 
 
-def url_exists(url, base="data.hisparc.nl"):
-    """Check if the url exists (returns 200)"""
+def get_json(url):
+    """Get the json from url and load it into a Python object"""
 
-    conn = httplib.HTTPConnection(base)
-    conn.request("HEAD", url)
-    res = conn.getresponse()
-    return res.status in (200, )
+    json_data = json.loads(urllib2.urlopen(url).read())
+
+    return json_data
 
 
 def yesterday_url():
     """Make the part of the url for the date (yesterday)"""
 
-    yesterday = dt.now() - timedelta(days = 1)
+    yesterday = dt.now() - timedelta(days=1)
     url = "%s/%s/%s/" % (yesterday.year, yesterday.month, yesterday.day)
+
     return url
 
 
