@@ -12,7 +12,7 @@ def remove_duplicate_events(data, group, kind='events'):
     if kind == 'weather':
         events = group.weather
         timestamps = [x for x in enumerate(events.col('timestamp'))]
-    else
+    else:
         events = group.events
         timestamps = [x for x in enumerate(events.col('ext_timestamp'))]
 
