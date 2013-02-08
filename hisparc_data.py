@@ -25,10 +25,10 @@ print 'MM     MM  MMM     MMMM     MMMMMMM         MMM      MMMMMMM         MMMM
 print 'MM     MM  MMM   MMMMMMMM   MMMMMMMMM8     MMMM      MMMMMMMMMM   ZMMMMMMMM'
 print 'MM     MM       MMM    MMM  MMM    =MM     MMMMM     MM      MM  =MM     MMM'
 print 'MM     MM  MMM   MMMMN      MMM    MMM    MMN MMN    MM     MMM  MMM'
-print 'MMMMMMMMM  MMM     MMMMMM   MMMMMMMMM    MMM   MM    MMMMMMMM    MM8'
+print 'MMMMMMMMM  MMM     MMMMMM   MMMMMMMMM    MMM   MM    MMMNMMMM    MM8'
 print 'MM     MM  MMM         MMM  MMM          MMMMMMMMM   MM   MMM~   MMM      M'
 print 'MM     MM  MMM  MMM    MMM  MMM         MMM     MM   MM    =MM+   MMM   +MMM'
-print 'MM     MM  MMM   MMMMMMMM   MMM        8MM      MMM  MM      MMO   MMMMMMM='
+print 'MM     MM  MAM   MMMMRMMM   MKM        dMM      NMM  MM      MMO   MMMBMMM='
 print ''
 print ''
 print 'Welcome to HiSPARC download and correlation software!'
@@ -36,7 +36,7 @@ print ''
 print 'With this program you can download HiSPARC data, plot data and search for a correlation between HiSPARC shower and/or weather variables.'
 print ''
 
-download_question = query_yes_no('Do you want to download DATA?')
+download_question = query_yes_no('Do you want to download DATA if no you must have DATA on your pc?')
 stations = []
 plot_variable1 = []
 plot_variable2 = []
@@ -46,7 +46,7 @@ if download_question == True:
     if show_operational_stations == True:
         search_operational_stations()
 
-    user_hisparc_station_id_1 = question.digit('Enter the HiSPARC STATION ID from which you want to download data ( e.g. 501 ): ')
+    user_hisparc_station_id_1 = question.digit('Enter the HiSPARC STATION ID frnom which you want to download data ( e.g. 501 ): ')
     stations.append(user_hisparc_station_id_1)
     user_start_date_data_interval = question.digit_and_date('Enter START date data interval ( e.g. 2011,7,21 ) : ')
     user_stop_date_data_interval = question.digit_and_date('Enter STOP date data interval ( e.g. 2011,7,22 ) : ')
@@ -113,7 +113,7 @@ if plot_question == True and use_downloaded_files == False:
     print ''
     station_ID = question.digit("Enter the station ID that you want to use in your analysis ( e.g. 501 ) ")
     stations.append(station_ID)
-    print ''
+    print '' 
     number_of_files = question.digit("Enter the NUMBER of FILENAMES for station %s that you want to use in your analysis ( e.g. 6 ): " % station_ID)
     print ''
     print "You are going to enter filenames ( e.g. data_s501_2011,7,21_2011,7,22.h5 )"
@@ -162,16 +162,19 @@ if plot_question == True and correlate_question == True:
         for j in range(1, int(number_of_files) + 1):
             while True:
                 filename = raw_input('For station %s enter filename number %d: ' % (station_ID, j))
-                ID = get_station_ID_from_filename(filename)
-                print stations
-                if ID in stations:
-                    list_files.append(filename)
-                    break
+                if os.path.exists(filename):
+                    ID = get_station_ID_from_filename(filename)
+                    print stations
+                    if ID in stations:
+                        list_files.append(filename)
+                        break
+                    else:
+                        print "Oops! The filename you entered does not match the station ID you entered earlier. Try again..."
                 else:
-                    print "Oops! The filename you entered does not match the station ID you entered earlier. Try again..."
+                    print "Oops! The filename you entered does not exist. Try again..."
         kind_of_data_in_table = kind_of_data(list_files) # e.g.  [('data_s501_2011,6,30_2011,6,30.h5', True, True), ('data_s502_2011,6,30_2011,6,30.h5', True, False)]
         plot_variable2 = choose_one_variable(kind_of_data_in_table, stations) #e.g. plot_variable = [('event_rate','data_s501_2011,12,7_2011,12,8.h5','501','events')]
-
+        
         if returntype == 'MPV':
             if len(times) > 1:
                 mean_variable_list = get_corresponding_values_MPV(plot_variable2, times)

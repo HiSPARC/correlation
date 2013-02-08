@@ -118,6 +118,8 @@ def least_squares_fit(filename, variable1, variable2):
         correlation = 'a MEDIUM'
     elif 0.5 <= absolute_cor_coef <= 1:
         correlation = 'a STRONG'
+    else:
+        correlation = ''
 
     if cor_coef >= 0.1:
         pos_neg = ' POSITIVE'

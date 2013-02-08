@@ -54,8 +54,8 @@ def get_active_stations():
     """Check which of the given stations had any shower or weather data yesterday"""
 
     station_ids = get_station_ids()
-    active_shower = active_shower_station(active_stations)
-    active_weather = active_weather_station(active_stations)
+    active_shower = active_shower_station(station_ids)
+    active_weather = active_weather_station(station_ids)
 
     return active_shower, active_weather
 
