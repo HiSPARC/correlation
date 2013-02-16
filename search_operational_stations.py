@@ -63,7 +63,7 @@ def get_active_stations():
 def active_shower_station(station_ids):
     """Check which of the given station ids had any shower data yesterday"""
 
-    url_template = "http://data.hisparc.nl/django/api/station/%s/data/" + yesterday_url()
+    url_template = "http://data.hisparc.nl/api/station/%s/data/" + yesterday_url()
     active_ids = [id for id in station_ids if get_json(url_template % id)]
 
     return active_ids
@@ -72,7 +72,7 @@ def active_shower_station(station_ids):
 def active_weather_station(station_ids):
     """Check which of the given station ids had any weather data yesterday"""
 
-    url_template = "http://data.hisparc.nl/django/api/station/%s/weather/" + yesterday_url()
+    url_template = "http://data.hisparc.nl/api/station/%s/weather/" + yesterday_url()
     active_ids = [id for id in station_ids if get_json(url_template % id)]
 
     return active_ids
@@ -81,7 +81,7 @@ def active_weather_station(station_ids):
 def get_station_ids():
     """Get list of all station ids from the API Stations List page"""
 
-    url = "http://data.hisparc.nl/django/api/stations"
+    url = "http://data.hisparc.nl/api/stations"
     stations_json = get_json(url)
     station_ids = [station['number'] for station in stations_json]
 
