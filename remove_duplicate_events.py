@@ -22,7 +22,7 @@ def remove_duplicate_events(data, group, kind='events'):
     unique_list = []
     for unique_id, timestamp in timestamps:
         if timestamp != prev:
-            unique_list.append(unique_list)
+            unique_list.append(unique_id)
         prev = timestamp
 
     unique_list.sort()
