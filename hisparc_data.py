@@ -21,14 +21,14 @@ from create_correlation_table import create_correlation_table
 from interpolate_selection import interpolate_selection
 
 print ''
-print 'MM     MM  MMM     MMMM     MMMMMMM         MMM      MMMMMMM         MMMM'
-print 'MM     MM  MMM   MMMMMMMM   MMMMMMMMM8     MMMM      MMMMMMMMMM   ZMMMMMMMM'
-print 'MM     MM       MMM    MMM  MMM    =MM     MMMMM     MM      MM  =MM     MMM'
-print 'MM     MM  MMM   MMMMN      MMM    MMM    MMN MMN    MM     MMM  MMM'
-print 'MMMMMMMMM  MMM     MMMMMM   MMMMMMMMM    MMM   MM    MMMMMMMM    MM8'
-print 'MM     MM  MMM         MMM  MMM          MMMMMMMMM   MM   MMM~   MMM      M'
-print 'MM     MM  MMM  MMM    MMM  MMM         MMM     MM   MM    =MM+   MMM   +MMM'
-print 'MM     MM  MMM   MMMMMMMM   MMM        8MM      MMM  MM      MMO   MMMMMMM='
+print 'HH     HH  iii     SSSS     PPPPPPP        A         RRRRRRR        CCCCCC
+print 'HH     HH  iii   SSSSSSSS   PPPPPPPPP     AAA        RRRRRRRRRR   CCC    CCC
+print 'HH     HH       SSS    SSS  PPP    PPP   AAAAA       RRR     RRR CCC      CCC
+print 'HH     HH  iii   SSSSS      PPP    PPP  AAA AAA      RRR    RRR  CCC
+print 'HHHHHHHHH  iii     SSSSSS   PPPPPPPPP  AAA   AAA     RRRRRRRR    CCC
+print 'HH     HH  iii         SSS  PPP       AAAAAAAAAAA    RRR   RRR   CCC      CCC
+print 'HH     HH  iii  SSS    SSS  PPP      AAA       AAA   RRR    RRR   CCC    CCC
+print 'HH     HH  iii   SSSSSSSS   PPP     AAA         AAA  RRR      RRR   CCCCCC
 print ''
 print ''
 print 'Welcome to HiSPARC download and correlation software!'
